@@ -1,0 +1,24 @@
+{
+  "name": "progetto-asw",
+  "version": "1.0.0",
+  "description": "Progetto di esame per Applicazioni e Servizi Web",
+  "main": "index.js",
+  "dependencies": {
+    "@angular/cli": "^1.6.6",
+    "typescript": "^2.6.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Robotex/Progetto-ASW.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Robotex/Progetto-ASW/issues"
+  },
+  "homepage": "https://github.com/Robotex/Progetto-ASW#readme"
+}
