@@ -4,10 +4,11 @@
   "description": "Progetto di esame per Applicazioni e Servizi Web",
   "main": "index.js",
   "dependencies": {
-    "@angular/cli": "^1.6.6",
     "typescript": "^2.6.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@angular/cli": "^1.6.6"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
