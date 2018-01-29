@@ -13,9 +13,10 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^5.2.0",
-    "@angular/common": "^5.2.0",
+    "@angular/common": "^5.2.2",
     "@angular/compiler": "^5.2.0",
-    "@angular/core": "^5.2.0",
+    "@angular/core": "^5.2.2",
+    "@angular/flex-layout": "git+https://github.com/angular/flex-layout-builds.git",
     "@angular/forms": "^5.2.0",
     "@angular/http": "^5.2.0",
     "@angular/platform-browser": "^5.2.0",
@@ -26,7 +27,7 @@
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
-    "@angular/cli": "1.6.6",
+    "@angular/cli": "^1.6.6",
     "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
     "@types/jasmine": "~2.8.3",
