@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HudComponentComponent } from './hud-component.component';
+import { HudComponent } from './hud.component';
 
-describe('HudComponentComponent', () => {
-  let component: HudComponentComponent;
-  let fixture: ComponentFixture<HudComponentComponent>;
+describe('HudComponent', () => {
+  let component: HudComponent;
+  let fixture: ComponentFixture<HudComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HudComponentComponent ]
+      declarations: [ HudComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HudComponentComponent);
+    fixture = TestBed.createComponent(HudComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

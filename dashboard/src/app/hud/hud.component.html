@@ -1,0 +1,11 @@
+<app-hud-status></app-hud-status>
+
+<mat-card class="main-card">
+  <mat-list class="sensors-list">
+    <mat-list-item *ngFor="let s of sensors" [ngSwitch]="s.generic">
+      <div *ngSwitchCase="'Double'">{{s.sensor}}:{{s.value}}</div>
+      <div *ngSwitchCase="'Vector3'">{{s.sensor}}:{{s.value.x}},{{s.value.y}},{{s.value.z}}</div>
+      <div *ngSwitchDefault>{{s.sensor}}: UNKNOWN TYPE</div>
+    </mat-list-item>
+  </mat-list>
+</mat-card>

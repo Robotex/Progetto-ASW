@@ -3,18 +3,18 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { HudComponentComponent } from './hud-component/hud-component.component';
-import { HudCardSpawnerComponentComponent } from './hud-card-spawner-component/hud-card-spawner-component.component';
+import { RoutingModule } from './routing/routing.module';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HudComponentComponent,
-    HudCardSpawnerComponentComponent
+    HomeComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
