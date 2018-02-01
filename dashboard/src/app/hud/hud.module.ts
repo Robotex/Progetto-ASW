@@ -10,6 +10,9 @@ import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 import { routing } from './hud.routing';
 import * as SockJS from 'sockjs-client';
 import { HudStatusComponent } from './hud-status/hud-status.component';
+import { HudMapComponent } from './hud-map/hud-map.component';
+
+import { AgmCoreModule } from '@agm/core';
 
 export function socketProvider() {
   return new SockJS('http://piagatech.ddns.net:8090/greetings');
@@ -52,9 +55,12 @@ const stompConfig: StompConfig = {
     MatListModule, 
     MatSidenavModule,
     MatTooltipModule,
+    AgmCoreModule.forRoot({
+      //apiKey: 'YOUR_KEY'
+    }),
     routing
   ],
-  declarations: [HudComponent, HudStatusComponent],
+  declarations: [HudComponent, HudStatusComponent, HudMapComponent],
   providers: [StompService,
     {
       provide: StompConfig,
