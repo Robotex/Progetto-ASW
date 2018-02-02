@@ -4,7 +4,7 @@ import {
   MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatListModule, MatSidenavModule,
   MatTooltipModule
 } from '@angular/material';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { HudComponent } from '../hud/hud.component';
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 import { routing } from './hud.routing';

@@ -1,14 +1,28 @@
 <app-hud-status></app-hud-status>
 
+<button mat-button 
+  (click)="subscribe()">Subscribe</button>
+<button mat-button 
+  (click)="unsubscribe()">Unsubscribe</button>
+
 <mat-card class="main-card">
   <mat-grid-list cols='2' class="sensors-list">
-    <mat-grid-tile *ngFor="let s of sensors" [ngSwitch]="s.generic">
-
-      <div *ngSwitchCase="'Double'">{{s.sensor}}:{{s.value}}</div>
-      <div *ngSwitchCase="'Vector3'">{{s.sensor}}:{{s.value.x}},{{s.value.y}},{{s.value.z}}</div>
-      <div *ngSwitchCase="'String'">{{s.sensor}}:<img [src]="'data:image/jpg;base64,' +s.value " /></div>
-      <div *ngSwitchDefault>{{s.sensor}}: UNKNOWN TYPE</div>
-    </mat-grid-tile>
+    <ng-container *ngFor="let s of sensors">
+      <mat-grid-tile *ngIf="s.data" [ngSwitch]="s.data.generic">
+        <ng-container *ngIf="s.details">
+            <div *ngSwitchCase="'Double'">{{s.name}}: <span [ngClass]="s.data.value >= s.details.value.MIN_VALUE && s.data.value <= s.details.value.MAX_VALUE ? 'greenClass' : 'redClass'">{{s.data.value}}</span></div>
+            <div *ngSwitchCase="'Vector3'">{{s.name}}:{{s.data.value.x}},{{s.data.value.y}},{{s.data.value.z}}</div>
+            <div *ngSwitchCase="'String'">{{s.name}}:<img [src]="'data:image/jpg;base64,' +s.data.value " /></div>
+            <div *ngSwitchDefault>{{s.name}}: UNKNOWN TYPE</div>
+        </ng-container>
+        <ng-container *ngElse>
+            <div *ngSwitchCase="'Double'">{{s.name}}: {{s.data.value}}</div>
+            <div *ngSwitchCase="'Vector3'">{{s.name}}:{{s.data.value.x}},{{s.data.value.y}},{{s.data.value.z}}</div>
+            <div *ngSwitchCase="'String'">{{s.name}}:<img [src]="'data:image/jpg;base64,' +s.data.value " /></div>
+            <div *ngSwitchDefault>{{s.name}}: UNKNOWN TYPE</div>
+        </ng-container>
+      </mat-grid-tile>
+    </ng-container>
   </mat-grid-list>
 </mat-card>
 

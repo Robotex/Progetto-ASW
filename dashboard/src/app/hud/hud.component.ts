@@ -4,7 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Message } from '@stomp/stompjs';
 
+import { HudSensor } from './model/hud-sensor';
 import { HudSensorData } from './model/hud-sensor-data';
+import { HudSensorDetails } from './model/hud-sensor-details';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -22,7 +24,7 @@ export class HudComponent implements OnInit, OnDestroy {
   public statuses: Observable<Message>;
   public details: Observable<Message>;
 
-  public sensors: HudSensorData[] = [];
+  public sensors: HudSensor[] = [];
 
   public subscribed: boolean;
 
@@ -41,13 +43,19 @@ export class HudComponent implements OnInit, OnDestroy {
       return message.body;
     }).subscribe((msg_body: string) => {
       let sensorData = <HudSensorData>JSON.parse(msg_body);
-      var sensor = this.sensors.find(function(element) {
-        return element.sensor === sensorData.sensor;
+      let sensor = this.sensors.find(function(element) {
+        return element.name === sensorData.sensor;
       });
-      if (sensor !== undefined)
-        sensor.value = sensorData.value;
+      if (sensor !== undefined) {
+        sensor.data = sensorData;
+      }
       else
-        this.sensors.push(sensorData);
+      {
+        sensor = new HudSensor();
+        sensor.name = sensorData.sensor;
+        sensor.data = sensorData;
+        this.sensors.push(sensor);
+      }
     });
 
     this.statusesSubscription = this.statuses.map((message: Message) => {
@@ -66,15 +74,19 @@ export class HudComponent implements OnInit, OnDestroy {
     this.detailsSubscription = this.details.map((message: Message) => {
       return message.body;
     }).subscribe((msg_body: string) => {
-      /*let sensorData = <HudSensorData>JSON.parse(msg_body);
+      let sensorData = <HudSensorData>JSON.parse(msg_body);
       let sensor = this.sensors.find(function(element) {
-        return element.sensor === sensorData.sensor;
+        return element.name === sensorData.sensor;
       });
-      if (sensor !== undefined)
-        sensor.details = sensorData.value;
+      if (sensor !== undefined) {
+        sensor.details = sensorData;
+      }
       else {
-        this.sensors.push(sensorData);
-      }*/
+        sensor = new HudSensor();
+        sensor.name = sensorData.sensor;
+        sensor.details = sensorData;
+        this.sensors.push(sensor);
+      }
     });
 
     this.subscribed = true;
@@ -99,11 +111,6 @@ export class HudComponent implements OnInit, OnDestroy {
   }
 
   // Callbacks
-  public onSensorData = (message: Message) => {
-    let sensorData = <HudSensorData>JSON.parse(message.body);
-    //this.sensors[sensorData.sensor] = sensorData;
-  }
-
   ngOnInit() {
     this.subscribed = false;
 
