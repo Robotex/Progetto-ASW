@@ -56,7 +56,7 @@ const stompConfig: StompConfig = {
     MatSidenavModule,
     MatTooltipModule,
     AgmCoreModule.forRoot({
-      //apiKey: 'YOUR_KEY'
+      apiKey: 'AIzaSyBXkaigCdSAS0Ji-hblkd6AfzDxbq_XIZo'
     }),
     routing
   ],
