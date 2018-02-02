@@ -15,8 +15,13 @@ import 'rxjs/add/operator/map';
 
 export class HudComponent implements OnInit, OnDestroy {
 
-  private subscription: Subscription;
-  public messages: Observable<Message>;
+  private updatesSubscription: Subscription;
+  private statusesSubscription: Subscription;
+  private detailsSubscription: Subscription;
+  public updates: Observable<Message>;
+  public statuses: Observable<Message>;
+  public details: Observable<Message>;
+
   public sensors: HudSensorData[] = [];
 
   public subscribed: boolean;
@@ -28,8 +33,11 @@ export class HudComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.messages = this._stompService.subscribe('/topic/reply');
-    this.subscription = this.messages.map((message: Message) => {
+    this.updates = this._stompService.subscribe('/sensors/update');
+    this.statuses = this._stompService.subscribe('/sensors/status');
+    this.details = this._stompService.subscribe('/sensors/details');
+
+    this.updatesSubscription = this.updates.map((message: Message) => {
       return message.body;
     }).subscribe((msg_body: string) => {
       let sensorData = <HudSensorData>JSON.parse(msg_body);
@@ -41,6 +49,34 @@ export class HudComponent implements OnInit, OnDestroy {
       else
         this.sensors.push(sensorData);
     });
+
+    this.statusesSubscription = this.statuses.map((message: Message) => {
+      return message.body;
+    }).subscribe((msg_body: string) => {
+      /*let sensorData = <HudSensorData>JSON.parse(msg_body);
+      var sensor = this.sensors.find(function(element) {
+        return element.sensor === sensorData.sensor;
+      });
+      if (sensor !== undefined)
+        sensor.value = sensorData.value;
+      else
+        this.sensors.push(sensorData);*/
+    });
+
+    this.detailsSubscription = this.details.map((message: Message) => {
+      return message.body;
+    }).subscribe((msg_body: string) => {
+      /*let sensorData = <HudSensorData>JSON.parse(msg_body);
+      let sensor = this.sensors.find(function(element) {
+        return element.sensor === sensorData.sensor;
+      });
+      if (sensor !== undefined)
+        sensor.details = sensorData.value;
+      else {
+        this.sensors.push(sensorData);
+      }*/
+    });
+
     this.subscribed = true;
   }
 
@@ -49,9 +85,15 @@ export class HudComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.subscription.unsubscribe();
-    this.subscription = null;
-    this.messages = null;
+    this.updatesSubscription.unsubscribe();
+    this.updatesSubscription = null;
+    this.statusesSubscription.unsubscribe();
+    this.statusesSubscription = null;
+    this.detailsSubscription.unsubscribe();
+    this.detailsSubscription = null;
+    this.updates = null;
+    this.statuses = null;
+    this.details = null;
 
     this.subscribed = false;
   }

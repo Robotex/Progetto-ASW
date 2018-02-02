@@ -1,3 +1,17 @@
-<agm-map [latitude]="lat" [longitude]="lng">
-    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-  </agm-map>
+<agm-map 
+  [latitude]="lat" 
+  [longitude]="lng" 
+  [disableDefaultUI]="true" 
+  [usePanning]="false" 
+  [zoomControl]="false"
+  [panControl]="false"
+  [streetViewControl]="false"
+  [disableDoubleClickZoom]="true"
+  [mapDraggable]="false"
+  [gestureHandling]="'none'"
+  [scrollwheel]="false">
+    <agm-marker 
+      [latitude]="lat" 
+      [longitude]="lng">
+    </agm-marker>
+</agm-map>
