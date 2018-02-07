@@ -4,7 +4,7 @@
   (click)="subscribe()">Subscribe</button>
 <button mat-button 
   (click)="unsubscribe()">Unsubscribe</button>
-
+<!--
 <mat-card class="main-card">
   <mat-grid-list cols='2' class="sensors-list">
     <ng-container *ngFor="let s of sensors">
@@ -25,5 +25,7 @@
     </ng-container>
   </mat-grid-list>
 </mat-card>
-
+-->
+<app-hud-camera></app-hud-camera>
+<app-hud-accelerometer></app-hud-accelerometer>
 <app-hud-map></app-hud-map>

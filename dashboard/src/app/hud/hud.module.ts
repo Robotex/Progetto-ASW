@@ -10,9 +10,19 @@ import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 import { routing } from './hud.routing';
 import * as SockJS from 'sockjs-client';
 import { HudStatusComponent } from './hud-status/hud-status.component';
-import { HudMapComponent } from './hud-map/hud-map.component';
+import { HudMapComponent } from './sensors/hud-map/hud-map.component';
 
 import { AgmCoreModule } from '@agm/core';
+import { HudBatteryComponent } from './sensors/hud-battery/hud-battery.component';
+import { HudTemperatureComponent } from './sensors/hud-temperature/hud-temperature.component';
+import { HudPressureComponent } from './sensors/hud-pressure/hud-pressure.component';
+import { HudLightComponent } from './sensors/hud-light/hud-light.component';
+import { HudProximityComponent } from './sensors/hud-proximity/hud-proximity.component';
+import { HudMagneticComponent } from './sensors/hud-magnetic/hud-magnetic.component';
+import { HudGyroscopeComponent } from './sensors/hud-gyroscope/hud-gyroscope.component';
+import { HudCameraComponent } from './sensors/hud-camera/hud-camera.component';
+import { HudDataService } from './hud-data.service';
+import { HudAccelerometerComponent } from './sensors/hud-accelerometer/hud-accelerometer.component';
 
 export function socketProvider() {
   return new SockJS('http://piagatech.ddns.net:8090/greetings');
@@ -60,11 +70,11 @@ const stompConfig: StompConfig = {
     }),
     routing
   ],
-  declarations: [HudComponent, HudStatusComponent, HudMapComponent],
+  declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudGyroscopeComponent, HudCameraComponent, HudAccelerometerComponent],
   providers: [StompService,
     {
       provide: StompConfig,
       useValue: stompConfig
-    }]
+    }, HudDataService]
 })
 export class HudModule { }
