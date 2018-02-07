@@ -20,19 +20,17 @@ export class HudComponent implements OnInit, OnDestroy {
 
   constructor(private dataService: HudDataService) { }
 
-  public subscribe() {
-    this.dataService.subscribe();
+  public connect() {
+    this.dataService.connect();
   }
 
-  public unsubscribe() {
-    this.dataService.unsubscribe();
+  public disconnect() {
+    this.dataService.disconnect();
   }
 
   ngOnInit() {
-    this.subscribe();
   }
 
   ngOnDestroy() {
-    this.unsubscribe();
   }
 }

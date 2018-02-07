@@ -8,11 +8,13 @@ import { HudDataService } from '../../hud-data.service';
 })
 export class HudLightComponent implements OnInit {
 
+  value: number = 0;
+
   constructor(private dataService: HudDataService) { }
 
   getSensor(): void {
     this.dataService.getSensor("LIGHT").subscribe(sensor => {
-
+      this.value = sensor.data.value;
     })
   }
 

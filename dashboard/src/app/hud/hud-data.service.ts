@@ -111,6 +111,22 @@ export class HudDataService implements OnDestroy {
     this.subscribed = false;
   }
 
+  public connect() {
+    if (this._stompService.connected()) {
+      return;
+    }
+    this._stompService.initAndConnect();
+    this.subscribe();
+  }
+
+  public disconnect() {
+    if (!this._stompService.connected()) {
+      return;
+    }
+    this.unsubscribe();
+    this._stompService.disconnect();
+  }
+
   init() {
     this.subscribed = false;
 
@@ -120,6 +136,7 @@ export class HudDataService implements OnDestroy {
   // Callbacks
   ngOnDestroy() {
     this.unsubscribe();
+    this.disconnect();
   }
 
 }
