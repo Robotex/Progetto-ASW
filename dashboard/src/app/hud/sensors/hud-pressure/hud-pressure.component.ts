@@ -8,10 +8,14 @@ import { HudDataService } from '../../hud-data.service';
 })
 export class HudPressureComponent implements OnInit {
 
+  value: number = 0;
+
   constructor(private dataService: HudDataService) { }
 
   getSensor() : void {
-    
+    this.dataService.getSensor("PRESSURE").subscribe(sensor => {
+      this.value = sensor.data.value;
+    })
   }
 
   ngOnInit() {

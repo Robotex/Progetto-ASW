@@ -19,6 +19,7 @@ export class HudLightComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getSensor();
   }
 
 }

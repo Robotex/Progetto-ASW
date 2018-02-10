@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { HudSensor } from './model/hud-sensor';
 import { HudSensorData } from './model/hud-sensor-data';
 import { HudSensorDetails } from './model/hud-sensor-details';
+import { HudSensorStatus } from './model/hud-sensor-status';
 import { Message } from '@stomp/stompjs';
 import { Observable } from 'rxjs/Observable';
 import { StompService } from '@stomp/ng2-stompjs';
@@ -64,14 +65,15 @@ export class HudDataService implements OnDestroy {
     this.statusesSubscription = this.statuses.map((message: Message) => {
       return message.body;
     }).subscribe((msg_body: string) => {
-      /*let sensorData = <HudSensorData>JSON.parse(msg_body);
-      var sensor = this.sensors.find(function(element) {
-        return element.sensor === sensorData.sensor;
-      });
-      if (sensor !== undefined)
-        sensor.value = sensorData.value;
-      else
-        this.sensors.push(sensorData);*/
+      let sensorData = <HudSensorStatus>JSON.parse(msg_body);
+      var sensor = this.sensors[sensorData.sensor];
+      if (sensor !== undefined) {
+        sensor.status = sensorData;
+      } else {
+        sensor = new HudSensor();
+        sensor.name = sensorData.sensor;
+        sensor.status = sensorData;
+      }
     });
 
     this.detailsSubscription = this.details.map((message: Message) => {
@@ -81,8 +83,7 @@ export class HudDataService implements OnDestroy {
       let sensor = this.sensors[sensorData.sensor];
       if (sensor !== undefined) {
         sensor.details = sensorData;
-      }
-      else {
+      } else {
         sensor = new HudSensor();
         sensor.name = sensorData.sensor;
         sensor.details = sensorData;
