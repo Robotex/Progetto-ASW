@@ -1,5 +1,5 @@
 export interface HudSensorDetails {
     generic: string;
     sensor: string;
-    value: any;
+    value: {[key: string]: any};
 }

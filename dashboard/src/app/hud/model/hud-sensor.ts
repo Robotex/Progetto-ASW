@@ -10,6 +10,8 @@ export class HudSensor {
     public status: HudSensorStatus;
     public subject: Subject<HudSensor>;
 
+    public properties: {[name: string]: any};
+
     constructor() {
         this.subject = new Subject();
     }

@@ -89,6 +89,8 @@ export class HudDataService implements OnDestroy {
         sensor.details = sensorData;
         //this.sensors.push(sensor);
       }
+      
+      sensor.properties = sensor.details.value;
     });
 
     this.subscribed = true;
