@@ -13,9 +13,10 @@ export class HudLightComponent implements OnInit {
   constructor(private dataService: HudDataService) { }
 
   getSensor(): void {
-    this.dataService.getSensor("LIGHT").subscribe(sensor => {
+    this.dataService.getSensorObservable("LIGHT").subscribe(sensor => {
       this.value = sensor.data.value;
     })
+    
   }
 
   ngOnInit() {

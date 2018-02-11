@@ -11,7 +11,7 @@ export class HudTemperatureComponent implements OnInit {
   constructor(private dataService: HudDataService) { }
 
   getSensor(): void {
-    this.dataService.getSensor("TEMPERATURE").subscribe(sensor => {
+    this.dataService.getSensorObservable("TEMPERATURE").subscribe(sensor => {
 
     })
   }

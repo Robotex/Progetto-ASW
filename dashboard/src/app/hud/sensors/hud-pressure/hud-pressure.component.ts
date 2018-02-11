@@ -13,7 +13,7 @@ export class HudPressureComponent implements OnInit {
   constructor(private dataService: HudDataService) { }
 
   getSensor() : void {
-    this.dataService.getSensor("PRESSURE").subscribe(sensor => {
+    this.dataService.getSensorObservable("PRESSURE").subscribe(sensor => {
       this.value = sensor.data.value;
     })
   }

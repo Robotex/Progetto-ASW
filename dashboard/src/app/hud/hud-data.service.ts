@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { StompService } from '@stomp/ng2-stompjs';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of'
+import { HUD_SENSORS_DETAIL_NAME } from './model/hud-sensors-detail-enum';
 
 @Injectable()
 export class HudDataService implements OnDestroy {
@@ -26,7 +27,12 @@ export class HudDataService implements OnDestroy {
     this.init();
   }
 
-  public getSensor(what: string): Observable<HudSensor> {
+  public getSensor(whatSensor: string)
+  {
+    return this.sensors[whatSensor];
+  }
+
+  public getSensorObservable(what: string): Observable<HudSensor> {
     if (this.sensors[what] !== undefined) {
       return this.sensors[what].subject.asObservable();
     } else {
@@ -35,14 +41,36 @@ export class HudDataService implements OnDestroy {
     }
   }
 
+  public getSensorProperty(whatSensor:string,whatProperty:HUD_SENSORS_DETAIL_NAME)
+  {
+    if (this.sensors[whatSensor] !== undefined)
+    {
+      if (this.sensors[whatSensor].properties[whatProperty]!==undefined)
+        return this.sensors[whatSensor].properties[whatProperty]!==undefined;
+      else
+        return "Not declared property for this sensor";
+    }
+    return "The sensor "+whatSensor+" does not exists";
+  }
+
+  public getSensorProperties(whatSensor:string)
+  {
+    if (this.sensors[whatSensor]!== undefined)
+    {
+      return this.sensors[whatSensor].properties;
+    }
+  }
+
   public subscribe() {
     if (this.subscribed) {
       return;
     }
-
-    this.updates = this._stompService.subscribe('/sensors/update');
-    this.statuses = this._stompService.subscribe('/sensors/status');
     this.details = this._stompService.subscribe('/sensors/details');
+    if (this.details!= null && this.details)
+    {
+      this.updates = this._stompService.subscribe('/sensors/update');
+      this.statuses = this._stompService.subscribe('/sensors/status');
+    }
 
     this.updatesSubscription = this.updates.map((message: Message) => {
       return message.body;
@@ -52,13 +80,13 @@ export class HudDataService implements OnDestroy {
       if (sensor !== undefined) {
         sensor.data = sensorData;
       }
-      else
+      /*else
       {
         sensor = new HudSensor();
         sensor.name = sensorData.sensor;
         sensor.data = sensorData;
         //this.sensors.push(sensor);
-      }
+      }*/
       sensor.subject.next(sensor);
     });
 
@@ -69,28 +97,45 @@ export class HudDataService implements OnDestroy {
       var sensor = this.sensors[sensorData.sensor];
       if (sensor !== undefined) {
         sensor.status = sensorData;
-      } else {
+      } /*else {
         sensor = new HudSensor();
         sensor.name = sensorData.sensor;
         sensor.status = sensorData;
-      }
+      }*/
     });
 
     this.detailsSubscription = this.details.map((message: Message) => {
       return message.body;
     }).subscribe((msg_body: string) => {
       let sensorData = <HudSensorDetails>JSON.parse(msg_body);
+      let sensorDataMap:{[key:string]:any}=sensorData.value;
+      console.log("Details of sensor: "+sensorData.sensor);
+      console.log("1 DETAIL: "+sensorDataMap[HUD_SENSORS_DETAIL_NAME.MAX_VALUE]);
+      
       let sensor = this.sensors[sensorData.sensor];
       if (sensor !== undefined) {
+        sensor.properties=sensorDataMap;
         sensor.details = sensorData;
+        console.log("Updating sensor "+sensorData.sensor);
+        console.log(sensor);
+        
       } else {
-        sensor = new HudSensor();
+        
+        /*sensor = new HudSensor();
         sensor.name = sensorData.sensor;
         sensor.details = sensorData;
+        console.log("Creating sensor "+sensor.name);
+        console.log(sensorDataMap.keys().length)
+        for(let key of sensorDataMap.keys())
+        {
+          console.log(key);
+        }*/
+
+        
         //this.sensors.push(sensor);
       }
       
-      sensor.properties = sensor.details.value;
+      //sensor.properties = sensor.details.value;
     });
 
     this.subscribed = true;
@@ -133,7 +178,7 @@ export class HudDataService implements OnDestroy {
   init() {
     this.subscribed = false;
 
-    //this.subscribe();
+    this.subscribe();
   }
 
   // Callbacks

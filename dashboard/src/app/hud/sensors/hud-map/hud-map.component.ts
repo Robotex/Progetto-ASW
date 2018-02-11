@@ -15,7 +15,7 @@ export class HudMapComponent implements OnInit {
   constructor(private dataService: HudDataService) { }
 
   getSensor(): void {
-    this.dataService.getSensor("GPS").subscribe(sensor => {
+    this.dataService.getSensorObservable("GPS").subscribe(sensor => {
       this.lat = sensor.data.value.value.latitude;
       this.lng = sensor.data.value.value.longitude;
     })

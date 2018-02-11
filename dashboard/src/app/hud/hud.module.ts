@@ -49,7 +49,7 @@ const stompConfig: StompConfig = {
   reconnect_delay: 5000,
 
   // Will log diagnostics on console
-  debug: true
+  debug: false
 };
 
 
