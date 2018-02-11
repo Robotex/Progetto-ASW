@@ -79,7 +79,7 @@ export class HudDataService implements OnDestroy {
     this.detailsSubscription = this.details.map((message: Message) => {
       return message.body;
     }).subscribe((msg_body: string) => {
-      let sensorData = <HudSensorData>JSON.parse(msg_body);
+      let sensorData = <HudSensorDetails>JSON.parse(msg_body);
       let sensor = this.sensors[sensorData.sensor];
       if (sensor !== undefined) {
         sensor.details = sensorData;
@@ -89,6 +89,8 @@ export class HudDataService implements OnDestroy {
         sensor.details = sensorData;
         //this.sensors.push(sensor);
       }
+      
+      sensor.properties = sensor.details.value;
     });
 
     this.subscribed = true;
