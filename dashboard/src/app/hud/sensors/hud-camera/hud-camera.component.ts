@@ -9,8 +9,11 @@ import { HudDataService } from '../../hud-data.service';
 export class HudCameraComponent implements OnInit {
 
   frame: string = "bm90IGFjdHVhbGx5IGEganBlZyBmaWxlCg==";
+  id: string= "cameraScreen";
 
-  constructor(private dataService: HudDataService) { }
+  constructor(private dataService: HudDataService) {
+    
+   }
 
   getSensor(): void {
     this.dataService.getSensor("CAMERA").subscribe(sensor => {

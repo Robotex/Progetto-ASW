@@ -1,3 +1,6 @@
-img {
-    width: 100%
+#cameraScreen
+{
+    position: absolute;
+    width:100%;
+    
 }

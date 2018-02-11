@@ -131,7 +131,7 @@ export class HudDataService implements OnDestroy {
   init() {
     this.subscribed = false;
 
-    this.subscribe();
+    //this.subscribe();
   }
 
   // Callbacks

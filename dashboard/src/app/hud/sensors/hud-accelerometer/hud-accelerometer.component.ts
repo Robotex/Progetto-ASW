@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { HudDataService } from '../../hud-data.service';
 
 @Component({
@@ -6,11 +6,15 @@ import { HudDataService } from '../../hud-data.service';
   templateUrl: './hud-accelerometer.component.html',
   styleUrls: ['./hud-accelerometer.component.css']
 })
-export class HudAccelerometerComponent implements OnInit {
+export class HudAccelerometerComponent implements OnInit, AfterViewInit {
 
-  x: number = 0;
+  @ViewChild('canvas') public canvas:ElementRef;
+  
+  x: number = 0;  
   y: number = 0;
   z: number = 0;
+
+  private cx: CanvasRenderingContext2D;
 
   constructor(private dataService: HudDataService) { }
 
@@ -22,8 +26,28 @@ export class HudAccelerometerComponent implements OnInit {
     })
   }
 
+  updateCanvas()
+  {
+    
+  }
+
   ngOnInit() {
     this.getSensor();
+  }
+
+  ngAfterViewInit(): void {
+    
+    const canvasE1: HTMLCanvasElement =this.canvas.nativeElement;
+    this.cx=canvasE1.getContext('2d');
+
+    canvasE1.width=51;
+    canvasE1.height=51;
+    this.cx.lineWidth=2;
+    this.cx.lineCap='round';
+    this.cx.strokeStyle = '#0f0';
+    this.cx.moveTo(17,15);
+    this.cx.lineTo(25,7);
+    this.cx.lineTo(33,15);
   }
 
 }

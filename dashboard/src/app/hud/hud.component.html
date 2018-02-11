@@ -1,9 +1,6 @@
 <app-hud-status></app-hud-status>
 
-<button mat-button 
-  (click)="connect()">Connect</button>
-<button mat-button 
-  (click)="disconnect()">Disconnect</button>
+
 <!--
 <mat-card class="main-card">
   <mat-grid-list cols='2' class="sensors-list">
@@ -28,8 +25,20 @@
 -->
 <div id="hud-container">
     <app-hud-camera></app-hud-camera>
-        <app-hud-accelerometer></app-hud-accelerometer>
-        <app-hud-light></app-hud-light>
-        <app-hud-pressure></app-hud-pressure>
-        <app-hud-map></app-hud-map>
+    <header>
+      <div id="controls">
+        <button mat-button (click)="connect()">Connect</button>
+        <button mat-button (click)="disconnect()">Disconnect</button>
+      </div>
+    </header>
+    <div id="center">
+      <app-hud-accelerometer></app-hud-accelerometer>
+      <app-hud-light></app-hud-light>
+      <app-hud-pressure></app-hud-pressure>
+    </div>
+    <footer>
+      <app-hud-map></app-hud-map>
+    </footer>
+
+    
 </div>
