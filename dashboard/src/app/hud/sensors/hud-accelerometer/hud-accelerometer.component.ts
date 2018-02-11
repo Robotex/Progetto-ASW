@@ -44,16 +44,7 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
 
   updateCanvas()
   {
-    
-  }
-
-  ngOnInit() {
-    
-  }
-
-  ngAfterViewInit(): void {
-    this.getSensor();
-    /*const canvasE1: HTMLCanvasElement =this.canvas.nativeElement;
+    const canvasE1: HTMLCanvasElement =this.canvas.nativeElement;
     this.cx=canvasE1.getContext('2d');
 
     canvasE1.width=51;
@@ -63,7 +54,17 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
     this.cx.strokeStyle = '#0f0';
     this.cx.moveTo(17,15);
     this.cx.lineTo(25,7);
-    this.cx.lineTo(33,15);*/
+    this.cx.lineTo(33,15);
+    
+  }
+
+  ngOnInit() {
+    
+  }
+
+  ngAfterViewInit(): void {
+    this.getSensor();
+    
   }
 
 }
