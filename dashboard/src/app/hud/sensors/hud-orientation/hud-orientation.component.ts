@@ -77,11 +77,11 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
 
   updateCanvas()
   {
-    let light=this.dataService.getSensorLastDataRecorded("LIGHT");
+    let light=this.dataService.getSensorLastDataRecorded("LIGHT").value;
     let lightMax:number=this.dataService.getSensorProperty("LIGHT",HUD_SENSORS_DETAIL_NAME.MAX_VALUE);
     if (light!=undefined&&lightMax!=undefined)
     {
-      this.cx.globalAlpha=0.2*lightMax;
+      this.cx.globalAlpha=this.min_opacity+((light*0.8)/lightMax);
     }
     else
       this.cx.globalAlpha=1;
