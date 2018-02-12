@@ -16,7 +16,8 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
   x: number = 0;  
   y: number = 0;
   z: number = 0;
-  min: number = 0;
+  maxSignal = 0;
+  minSignal = 0;
   opacityX:number=0;
   opacityY:number=0;
   opacityZ:number=0;
@@ -37,7 +38,12 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
       this.y = sensor.data.value.y;
       this.z = sensor.data.value.z;
       if (this.sensorProperties==null&&sensor.properties!=null&&sensor.properties!=undefined)
+      {
         this.sensorProperties=sensor.properties;
+        this.minSignal = this.sensorProperties[HUD_SENSORS_DETAIL_NAME.MIN_VALUE];
+        this.maxSignal = this.sensorProperties[HUD_SENSORS_DETAIL_NAME.MAX_VALUE];
+
+      }
       if (this.sensorProperties!=null)  
         this.updateCanvas();
       
@@ -49,6 +55,13 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
 
   }
 
+  changeStrokeColorOpacity(red:number,green:number,blue:number,opacity:number)
+  {
+    
+    this.cx.strokeStyle="rgba("+red+","+green+","+blue+","+opacity.toFixed(2)+")";
+    
+  }
+
   rotateCanvas(angle:number)
   {
     let half_width=(this.width*this.scale)/2;
@@ -58,101 +71,219 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
     this.cx.translate(-half_width,-half_height);
   }
 
-  drawSmallArrow(angle:number,strokeStyle:string)
-  {
-    this.cx.strokeStyle=strokeStyle;
-    if (angle!=0)
-    {
-      this.rotateCanvas(angle);
-    }
+  
 
-    this.cx.moveTo(34*this.scale,30*this.scale);
-    this.cx.lineTo(50*this.scale,14*this.scale);
-    this.cx.lineTo(66*this.scale,30*this.scale);
+  drawPositiveArrowsInside(value:number,max:number)
+  {
+    //small arrows
+    
+    let opacity:number=value<(max/2)?value/(max/2):1;
+    this.changeStrokeColorOpacity(0,255,0,opacity);
+    
+    this.cx.beginPath();
+    this.cx.moveTo(39*this.scale,47*this.scale);
+    this.cx.lineTo(43*this.scale,51*this.scale);
+    this.cx.lineTo(39*this.scale,55*this.scale);
     this.cx.stroke();
-    if (angle!=0)
+    this.cx.beginPath();
+    this.cx.moveTo(63*this.scale,47*this.scale);
+    this.cx.lineTo(59*this.scale,51*this.scale);
+    this.cx.lineTo(63*this.scale,55*this.scale);
+    this.cx.stroke();
+
+    if (value>max/2)
     {
-      this.rotateCanvas(-angle);
+      //big arrows
+      let half=max/2;
+      opacity=(value-half)/(half);
+      
+      if (value==max)
+      {
+        this.changeStrokeColorOpacity(255,0,0,1);
+      }
+      else
+      {
+        this.changeStrokeColorOpacity(0,255,0,opacity);
+      }
+      this.cx.beginPath();
+      this.cx.moveTo(43*this.scale,45*this.scale);
+      this.cx.lineTo(49*this.scale,51*this.scale);
+      this.cx.lineTo(43*this.scale,57*this.scale);
+      this.cx.stroke();
+      this.cx.beginPath();
+      this.cx.moveTo(59*this.scale,45*this.scale);
+      this.cx.lineTo(53*this.scale,51*this.scale);
+      this.cx.lineTo(59*this.scale,57*this.scale);
+      this.cx.stroke();
+      
     }
-    this.cx.strokeStyle="#000000";
+    
   }
 
-  drawBigArrow(angle:number,strokeStyle:string)
+  drawNegativeArrowsInside(value:number,min:number)
   {
-    this.cx.strokeStyle=strokeStyle;
-    if (angle!=0)
-      this.rotateCanvas(angle);
     
-    this.cx.moveTo(26*this.scale,24*this.scale);
-    this.cx.lineTo(50*this.scale,0*this.scale);
-    this.cx.lineTo(74*this.scale,24*this.scale);
+    //small arrows
+    let opacity:number=value>(min/2)?value/(min/2):1;
+    this.changeStrokeColorOpacity(0,255,0,opacity);
+    this.cx.beginPath();
+    this.cx.moveTo(49*this.scale,47*this.scale);
+    this.cx.lineTo(45*this.scale,51*this.scale);
+    this.cx.lineTo(49*this.scale,55*this.scale);
+    this.cx.stroke();
 
+    this.cx.beginPath();
+    this.cx.moveTo(53*this.scale,47*this.scale);
+    this.cx.lineTo(57*this.scale,51*this.scale);
+    this.cx.lineTo(53*this.scale,55*this.scale);
+    this.cx.stroke();
+    
+
+    if (value<min/2)
+    {
+      let half=min/2;
+      opacity=(value-half)/(half);
+      if (value==min)
+      {
+        this.changeStrokeColorOpacity(255,0,0,1);
+      }
+      else
+      {
+        this.changeStrokeColorOpacity(0,255,0,opacity);
+      }
+      //big arrows
+      this.cx.beginPath();
+      this.cx.moveTo(47*this.scale,43*this.scale);
+      this.cx.lineTo(39*this.scale,51*this.scale);
+      this.cx.lineTo(47*this.scale,59*this.scale);
+      this.cx.stroke();
+
+      this.cx.beginPath();
+      this.cx.moveTo(55*this.scale,43*this.scale);
+      this.cx.lineTo(63*this.scale,51*this.scale);
+      this.cx.lineTo(55*this.scale,59*this.scale);
+      this.cx.stroke();
+      
+    }
+   }
+
+  drawArrowsInside(value:number,max:number,min:number)
+  {
+    
+    if (value>0) this.drawPositiveArrowsInside(value,max);
+    else if (value<0) this.drawNegativeArrowsInside(value,min);
+    
+  }
+
+  drawSmallArrowOutside(angle:number)
+  {
+    
+    if (angle!=0)
+    {
+      this.rotateCanvas(angle);
+    }
+    
+    this.cx.beginPath();
+    this.cx.moveTo(35*this.scale,29*this.scale);
+    this.cx.lineTo(51*this.scale,13*this.scale);
+    this.cx.lineTo(67*this.scale,29*this.scale);
+    this.cx.stroke();
+    
+    if (angle!=0)
+    {
+      this.rotateCanvas(-angle);
+    }
+  }
+
+  drawBigArrowOutside(angle:number)
+  {
+    
+    if (angle!=0)
+      {this.rotateCanvas(angle);}
+    this.cx.beginPath();
+    this.cx.moveTo(27*this.scale,23*this.scale);
+    this.cx.lineTo(51*this.scale,0*this.scale);
+    this.cx.lineTo(75*this.scale,23*this.scale);
     this.cx.stroke();
     if (angle!=0)
-      this.rotateCanvas(-angle);
-    this.cx.strokeStyle="#000000";
+      {this.rotateCanvas(-angle);}
+    
   }
 
 
   drawOrthoArrows(value:number,max:number,min:number,angle:number)
   {
     //POSITIVE VALUES
-    let opacity:number=0;
+    let small_opacity:number=0;
+    let big_opacity:number=0;
 
-
+    
     if (value==0) return;
     if (value>0)
     {
-      opacity=value<(max/2)?value/(max/2):1;
+      let half=max/2;
+      small_opacity=value<half?value/half:1;
+      this.changeStrokeColorOpacity(0,255,0,small_opacity);
+      this.drawSmallArrowOutside(angle);
       
-      this.drawSmallArrow(angle,"rgba(0,255,0,"+opacity+")");
       if (value>max/2)
       {
-        opacity=(value-max/2)/(max/2);
+        
+        big_opacity=(value-half)/half;
+        
+        
         if (value==max)
-          this.drawBigArrow(angle,"rgba(255,0,0,1)");
+        {
+          this.changeStrokeColorOpacity(255,0,0,1);
+          this.drawBigArrowOutside(angle);
+        }
         else
-          this.drawBigArrow(angle,"rgba(0,255,0,"+opacity+")");
-
+        {
+          this.changeStrokeColorOpacity(0,255,0,big_opacity);
+          this.drawBigArrowOutside(angle);
+        }
+        
       }
     }
     else
     {
+      let half=min/2;
       //NEGATIVE VALUES
       let newAngle=360-(180-angle)
-      opacity=value>(min/2)?value/(min/2):1;
+      small_opacity=value>half?value/half:1;
+      this.changeStrokeColorOpacity(0,255,0,small_opacity);
+      this.drawSmallArrowOutside(newAngle);
       
-      this.drawSmallArrow(newAngle,"rgba(0,255,0,"+opacity+")");
-      if (value<min/2)
-      {
-        opacity=(value-min/2)/(min/2);
-        if (value==min)
-          this.drawBigArrow(newAngle,"rgba(255,0,0,1)");
-        else
-          this.drawBigArrow(newAngle,"rgba(0,255,0,"+opacity+")");
 
+      if (value<half)
+      {
+        
+        big_opacity=(value-half)/half;
+        
+        if (value==min)
+        {
+          this.changeStrokeColorOpacity(255,0,0,1);
+          this.drawBigArrowOutside(newAngle,);
+        }
+        else
+        {
+          this.changeStrokeColorOpacity(0,255,0,big_opacity);
+          this.drawBigArrowOutside(newAngle,);
+        }
+      
       }
     }
   }
   
 
   updateCanvas()
-  {
-    //console.log(this.myCanvas);
-    let canvasE1=this.myCanvas.nativeElement;
-    this.cx=canvasE1.getContext('2d');
-
-    canvasE1.width=this.width*this.scale;
-    canvasE1.height=this.height*this.scale;
-    this.cx.fillRect(0,0,102*this.scale,102*this.scale);
-    this.cx.lineWidth=2;
+  { 
+    this.cx.restore(); 
+    this.cx.clearRect(0,0,this.width*this.scale,this.height*this.scale);
     
-    let maxSignal=this.sensorProperties[HUD_SENSORS_DETAIL_NAME.MAX_VALUE];
-    let minSignal=this.sensorProperties[HUD_SENSORS_DETAIL_NAME.MIN_VALUE];
-    
-    this.drawOrthoArrows(this.z,maxSignal,minSignal,0);
-    this.drawOrthoArrows(this.x,maxSignal,minSignal,90);
-
+    this.drawArrowsInside(this.y,this.maxSignal,this.minSignal);
+    this.drawOrthoArrows(this.x,this.maxSignal,this.minSignal,90);
+    this.drawOrthoArrows(this.z,this.maxSignal,this.minSignal,0);
 
   }
 
@@ -161,8 +292,13 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
+    let canvasE1=this.myCanvas.nativeElement;
+    this.cx=canvasE1.getContext('2d');
+    canvasE1.width=this.width*this.scale;
+    canvasE1.height=this.height*this.scale;
+    this.cx.lineWidth=2*(this.scale/2);
     this.getSensor();
+    
     
   }
 

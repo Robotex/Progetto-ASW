@@ -109,15 +109,13 @@ export class HudDataService implements OnDestroy {
     }).subscribe((msg_body: string) => {
       let sensorData = <HudSensorDetails>JSON.parse(msg_body);
       let sensorDataMap:{[key:string]:any}=sensorData.value;
-      console.log("Details of sensor: "+sensorData.sensor);
-      console.log("1 DETAIL: "+sensorDataMap[HUD_SENSORS_DETAIL_NAME.MAX_VALUE]);
+      
       
       let sensor = this.sensors[sensorData.sensor];
       if (sensor !== undefined) {
         sensor.properties=sensorDataMap;
         sensor.details = sensorData;
-        console.log("Updating sensor "+sensorData.sensor);
-        console.log(sensor);
+       
         
       } else {
         
