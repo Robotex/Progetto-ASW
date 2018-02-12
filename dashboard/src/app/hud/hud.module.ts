@@ -19,7 +19,7 @@ import { HudPressureComponent } from './sensors/hud-pressure/hud-pressure.compon
 import { HudLightComponent } from './sensors/hud-light/hud-light.component';
 import { HudProximityComponent } from './sensors/hud-proximity/hud-proximity.component';
 import { HudMagneticComponent } from './sensors/hud-magnetic/hud-magnetic.component';
-import { HudGyroscopeComponent } from './sensors/hud-gyroscope/hud-gyroscope.component';
+import { HudOrientationComponent } from './sensors/hud-orientation/hud-orientation.component';
 import { HudCameraComponent } from './sensors/hud-camera/hud-camera.component';
 import { HudDataService } from './hud-data.service';
 import { HudAccelerometerComponent } from './sensors/hud-accelerometer/hud-accelerometer.component';
@@ -70,7 +70,7 @@ const stompConfig: StompConfig = {
     }),
     routing
   ],
-  declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudGyroscopeComponent, HudCameraComponent, HudAccelerometerComponent],
+  declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudOrientationComponent, HudCameraComponent, HudAccelerometerComponent],
   providers: [StompService,
     {
       provide: StompConfig,

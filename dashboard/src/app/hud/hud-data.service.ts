@@ -41,16 +41,21 @@ export class HudDataService implements OnDestroy {
     }
   }
 
-  public getSensorProperty(whatSensor:string,whatProperty:HUD_SENSORS_DETAIL_NAME)
+  public getSensorProperty(whatSensor:string,whatProperty:HUD_SENSORS_DETAIL_NAME):number
   {
     if (this.sensors[whatSensor] !== undefined)
     {
-      if (this.sensors[whatSensor].properties[whatProperty]!==undefined)
-        return this.sensors[whatSensor].properties[whatProperty]!==undefined;
-      else
-        return "Not declared property for this sensor";
+      return this.sensors[whatSensor].properties[HUD_SENSORS_DETAIL_NAME.MAX_VALUE];
     }
-    return "The sensor "+whatSensor+" does not exists";
+    
+  }
+
+  public getSensorLastDataRecorded(whatSensor:string):HudSensorData
+  {
+    if (this.sensors[whatSensor]!==undefined)
+    {
+      return this.sensors[whatSensor].data;
+    }
   }
 
   public getSensorProperties(whatSensor:string)
