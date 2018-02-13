@@ -23,15 +23,17 @@
   </mat-grid-list>
 </mat-card>
 -->
+<header>
+  <div id="controls">
+    <button mat-button (click)="connect()">Connect</button>
+    <button mat-button (click)="disconnect()">Disconnect</button>
+  </div>
+</header>
+
 <div id="hud-container">
     <app-hud-camera>
     </app-hud-camera>
-    <header>
-      <div id="controls">
-        <button mat-button (click)="connect()">Connect</button>
-        <button mat-button (click)="disconnect()">Disconnect</button>
-      </div>
-    </header>
+    
     <div id="center">
       
       

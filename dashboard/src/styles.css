@@ -1,8 +1,128 @@
 /* You can add global styles to this file, and also import other style files */
-
+*
+{
+    margin:0;
+    padding:0
+}
 
 router-outlet
 {
     position:relative;
 }
 
+nav
+{
+    position: absolute;
+    left: 5%;
+    top: 1%;
+    z-index: 3;
+}
+
+app-hud
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    justify-content: center;
+}
+
+app-hud-status
+{
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+header
+{
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    z-index: 5;
+}
+
+div#hud-container
+{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    flex-direction: row;
+    position: absolute;
+    height: 100%;
+    flex-direction: row;
+}
+app-hud-camera
+{
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    position: relative;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    align-items: center;
+}
+
+app-hud-orientation
+{
+    position: absolute;
+    
+}
+
+div#orientationComponent
+{
+    position: relative;
+    
+}
+
+div#orientationComponent p
+{
+    display: none;
+}
+
+app-hud-accelerometer
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+div#center
+{
+    position: absolute;
+    align-self: flex-end;
+}
+
+footer
+{
+    position: absolute;
+    width: 25%;
+    height: 28%;
+    bottom: 3%;
+    left: 3%;
+}
+
+app-hud-map
+{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+agm-map
+{
+    height: 100%;
+    width: 100%;
+}

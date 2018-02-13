@@ -48,35 +48,48 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
     })
   }
 
+  rotateCanvas(angle:number)
+  {
+    let halfX=this.width*this.scale/2,halfY=this.height*this.scale/2;
+
+    this.cx.translate(halfX,halfY);
+    this.cx.rotate(angle*Math.PI/180);
+    this.cx.translate(-halfX,-halfY);
+  }
+
   drawReticle(angle:number)
   {
     let halfX,halfY;
     halfX=this.width/2;
     halfY=this.height/2;
-    this.cx.translate(halfX,halfY);
-    this.cx.rotate(angle*Math.PI/180);
-    this.cx.translate(-halfX,-halfY);
+    this.rotateCanvas(angle);
 
-    this.cx.arc(halfX,halfY,16*this.scale,0,2*Math.PI)
+    this.cx.arc(halfX*this.scale,halfY*this.scale,16*this.scale,0,2*Math.PI);
+    this.cx.stroke();
+
+
     this.cx.beginPath();
     this.cx.moveTo(35*this.scale,51*this.scale);
     this.cx.lineTo(27*this.scale,51*this.scale);
+    this.cx.stroke();
     
     this.cx.beginPath();
     this.cx.moveTo(51*this.scale,35*this.scale);
     this.cx.lineTo(51*this.scale,27*this.scale);
-    
+    this.cx.stroke();
     this.cx.beginPath();
     this.cx.moveTo(67*this.scale,51*this.scale);
     this.cx.lineTo(75*this.scale,51*this.scale);
     this.cx.stroke();
 
-    this.cx.restore();
+    this.rotateCanvas(-angle);
 
   }
 
   updateCanvas()
   {
+    this.cx.restore();
+    this.cx.clearRect(0,0,this.width*this.scale,this.height*this.scale);
     let light=this.dataService.getSensorLastDataRecorded("LIGHT").value;
     let lightMax:number=this.dataService.getSensorProperty("LIGHT",HUD_SENSORS_DETAIL_NAME.MAX_VALUE);
     if (light!=undefined&&lightMax!=undefined)

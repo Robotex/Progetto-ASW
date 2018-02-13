@@ -18,9 +18,7 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
   z: number = 0;
   maxSignal = 0;
   minSignal = 0;
-  opacityX:number=0;
-  opacityY:number=0;
-  opacityZ:number=0;
+  min_opacity:number=0.2;
 
   width:number = 102;
   height:number=102;
@@ -280,6 +278,14 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
   { 
     this.cx.restore(); 
     this.cx.clearRect(0,0,this.width*this.scale,this.height*this.scale);
+    let light=this.dataService.getSensorLastDataRecorded("LIGHT").value;
+    let lightMax:number=this.dataService.getSensorProperty("LIGHT",HUD_SENSORS_DETAIL_NAME.MAX_VALUE);
+    if (light!=undefined&&lightMax!=undefined)
+    {
+      this.cx.globalAlpha=this.min_opacity+((light*0.8)/lightMax);
+    }
+    else
+      this.cx.globalAlpha=1;
     
     this.drawArrowsInside(this.y,this.maxSignal,this.minSignal);
     this.drawOrthoArrows(this.x,this.maxSignal,this.minSignal,90);
