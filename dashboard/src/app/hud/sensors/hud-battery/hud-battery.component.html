@@ -1,3 +1,6 @@
 <p>
-  hud-battery works!
+  BATTERIA: 
+  <span *ngIf="value<=20">SCARICO</span>
+  <span *ngIf="value>20&&value<=50">SCARICO</span>
+  <span *ngIf="value>50">CARICO</span>
 </p>
