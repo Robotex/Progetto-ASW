@@ -61,6 +61,12 @@ div#hud-container
     height: 100%;
     flex-direction: row;
 }
+
+#hud-container div#center
+{
+    display:none;
+}
+ 
 app-hud-camera
 {
     height: 100%;
@@ -78,13 +84,33 @@ app-hud-camera
 app-hud-orientation
 {
     position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    display:flex;
+    flex-wrap:wrap;
     
 }
 
 div#orientationComponent
 {
     position: relative;
-    
+    display:flex;
+    width:100%;
+    height: 100%;
+    flex-flow:column;
+
+}
+
+div#Center
+{
+    display: flex;
+    justify-content: center;
+    width:100%;
+    height: 100%;
+    align-self: center;
+
 }
 
 div#orientationComponent p
@@ -99,11 +125,7 @@ app-hud-accelerometer
     left: 0;
 }
 
-div#center
-{
-    position: absolute;
-    align-self: flex-end;
-}
+
 
 footer
 {
@@ -125,4 +147,40 @@ agm-map
 {
     height: 100%;
     width: 100%;
+}
+
+#samplePitchCanvas
+{
+    position: absolute;
+    display:none;
+    top:0px;
+    left:300px;
+}
+
+
+#topCenter
+{
+    position:absolute;
+    top:8%;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    
+}
+
+#rightCenter
+{
+    width:20%;
+}
+
+#rollAndAcc
+{
+    align-self: center;
+    position:relative;
+    
+}
+
+.pitchCanvas
+{
+    align-self:center;
 }

@@ -1,3 +1,7 @@
+<div id="topCenter">
+    
+    <canvas id="orientationYawCanvas" #orientationYawCanvas></canvas>
+  </div>
 <div id=orientationComponent>
   <p>
     hud orientation works!
@@ -5,10 +9,18 @@
     yaw {{yaw}}
     
   </p>
-
-  <canvas id="orientationCanvas" #orientationCanvas>
-    
-  </canvas>
-  <app-hud-accelerometer></app-hud-accelerometer>
   
+  <div id="Center">
+      <canvas id="orientationPitchCanvasLeft" class="pitchCanvas" #orientationPitchCanvasLeft></canvas>
+    <div id="rollAndAcc">
+      <canvas id="orientationRollCanvas" #orientationRollCanvas></canvas>
+      <app-hud-accelerometer></app-hud-accelerometer>
+      
+    </div>
+    <canvas id="orientationPitchCanvasRight" class="pitchCanvas" #orientationPitchCanvasRight></canvas>
+  </div>
+</div>
+<div id="sampleCanvas">
+    <canvas id=samplePitchCanvas #samplePitchCanvas></canvas>
+    <canvas id ="sampleYawCanvas" #sampleYawCanvas></canvas>
 </div>
