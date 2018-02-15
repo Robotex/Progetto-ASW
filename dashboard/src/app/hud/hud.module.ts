@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatListModule, MatSidenavModule,
-  MatTooltipModule
+  MatTooltipModule, MatMenuModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HudComponent } from '../hud/hud.component';
@@ -23,6 +23,7 @@ import { HudOrientationComponent } from './sensors/hud-orientation/hud-orientati
 import { HudCameraComponent } from './sensors/hud-camera/hud-camera.component';
 import { HudDataService } from './hud-data.service';
 import { HudAccelerometerComponent } from './sensors/hud-accelerometer/hud-accelerometer.component';
+import { HudMenuComponent } from './hud-menu/hud-menu.component';
 
 export function socketProvider() {
   //return new SockJS('http://piagatech.ddns.net:8090/greetings');
@@ -66,12 +67,13 @@ const stompConfig: StompConfig = {
     MatListModule, 
     MatSidenavModule,
     MatTooltipModule,
+    MatMenuModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBXkaigCdSAS0Ji-hblkd6AfzDxbq_XIZo'
     }),
     routing
   ],
-  declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudOrientationComponent, HudCameraComponent, HudAccelerometerComponent],
+  declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudOrientationComponent, HudCameraComponent, HudAccelerometerComponent, HudMenuComponent],
   providers: [StompService,
     {
       provide: StompConfig,
