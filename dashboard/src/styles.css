@@ -62,6 +62,14 @@ div#hud-container
     flex-direction: row;
 }
 
+@media only screen and (orientation:portrait)
+{
+    div#hud-container
+    {
+        width:100%;
+    }
+}
+
 #hud-container div#center
 {
     display:none;
