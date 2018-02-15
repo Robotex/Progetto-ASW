@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { HudDataService } from '../../hud-data.service';
 import { HUD_SENSORS_DETAIL_NAME } from '../../model/hud-sensors-detail-enum';
+import { getOrCreateElementRef } from '@angular/core/src/render3/di';
 
 @Component({
   selector: 'app-hud-orientation',
@@ -27,10 +28,11 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
   private roll_width:number=102;
   private roll_height:number=102;
   private pitch_width:number=50;
-  private pitch_height:number=180;
+  private pitch_height:number=220;
+  private pitch_step:number;
   private yaw_height:number=50;
   private scale:number=2;
-  private pitch_zoom:number=8;
+  private pitch_zoom:number=4;
   private yaw_zoom:number=4;
   
   private sensor_type="ORIENTATION";
@@ -120,25 +122,7 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
     this.drawReticle(this.roll);
   }
 
-  copyPitchSampleToCanvas(pitchCx:CanvasRenderingContext2D,rotate?:boolean)
-  {
-      pitchCx.clearRect(0,0,this.pitch_width*this.scale,this.pitch_height*this.scale);
-      let pattern=pitchCx.createPattern(this.sPitchCanvas.nativeElement,"repeat-y");
-      pitchCx.rect(0,0,this.pitch_width*this.scale,this.pitch_height*this.scale);
-      pitchCx.fillStyle=pattern;
-      let yTranslation=this.pitch_height*(this.scale*this.pitch_zoom-this.scale)/2;
-      let yPitch=this.pitch*this.pitch_zoom;
-      
-      if (rotate)
-        this.rotateCanvas(pitchCx,180,this.pitch_width*this.scale,this.pitch_height*this.scale);  
-      pitchCx.translate(0,-(yTranslation- yPitch));
-      pitchCx.fill();
-      pitchCx.translate(0,(yTranslation- yPitch));
-      if (rotate)
-        this.rotateCanvas(pitchCx,-180,this.pitch_width*this.scale,this.pitch_height*this.scale);  
-      
-      
-  }
+
 
   copyYawSampleToCanvas()
   {
@@ -149,20 +133,30 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
     let xTranslation=this.roll_width*this.scale*6;//this.roll_width*this.scale/3;
     let xYaw=this.roll_width*this.scale/2
             -this.yaw*(this.roll_width*this.yaw_zoom/360);
-    console.log("yaw: "+this.yaw+" xYaw:" +xYaw);
+    
 
     cx.translate(-xYaw,0);
     cx.fill();
     cx.translate(xYaw,0);
   }
 
+  
+
   updatePitchCanvas()
   {
     
     
-    this.copyPitchSampleToCanvas(this.pitchLeftCx,false);
-false  
-    this.copyPitchSampleToCanvas(this.pitchRightCx,false);
+    let translateY=-this.pitch_height*this.scale/2 //PARTO DA METÀ
+    +((this.pitch_height*this.scale*this.pitch_zoom)/180) //MAPPO I VALORI DEL PITCH CON L'ALTEZZA DEL CANVAS
+    *(90+this.pitch*18/22); //PRENDO IL PIXEL ESATTO DEL PITCH RISPETTIVO
+    
+    this.pitchLeftCx.clearRect(0,0,this.pitch_width*this.scale,this.pitch_height*this.scale);
+    this.pitchLeftCx.drawImage(this.sPitchCanvas.nativeElement,0,-translateY);
+    this.pitchRightCx.clearRect(0,0,this.pitch_width*this.scale,this.pitch_height*this.scale);
+    this.pitchRightCx.drawImage(this.sPitchCanvas.nativeElement,0,-translateY);
+    
+    
+    
     
   }
 
@@ -193,14 +187,15 @@ false
   drawPitchBigRow(stepHeight:number,iteration:number)
   {
     let y:number=stepHeight*iteration;
-    let numberToPrint=0;
-    if (iteration<9)
-      numberToPrint=y/(this.pitch_zoom/2);
-    else if (iteration<=27)
-      numberToPrint=180-(y/(this.pitch_zoom/2));
-    else if (iteration>27)
-      numberToPrint=-360+y/(this.pitch_zoom/2);
+
+    let numberToPrint=iteration<2?70+iteration*10:
+                      iteration<=20?110-iteration*10:
+                      -290+iteration*10;
     
+    
+    
+      
+    console.log(iteration+"|"+stepHeight+"|"+numberToPrint+"");
     this.sPitchCx.beginPath()
     let x1,x2,x3,x4;
     x1=0;
@@ -222,9 +217,12 @@ false
 
   initPitchSample()
   {
-    let step=(this.pitch_height*this.pitch_zoom)/36;
-    for(let index=0; index<=36; index++)
-      this.drawPitchBigRow(step,index);
+    this.pitch_step=(this.pitch_height*this.pitch_zoom)/22;
+    for(let index=0; index<=22; index++)
+      this.drawPitchBigRow(this.pitch_step,index);
+    let pattern=this.sPitchCx.createPattern(this.sPitchCanvas.nativeElement,"repeat-y");
+    this.sPitchCx.fillStyle=pattern;
+    this.sPitchCx.fill();
   }
 
   initYawSample()
@@ -278,16 +276,13 @@ false
     //sample canvas
     
     this.sPitchCx=this.getContextFromElement(this.sPitchCanvas);
-    this.sPitchCanvas.nativeElement.width=this.pitch_width*this.scale*this.pitch_zoom;
+    this.sPitchCanvas.nativeElement.width=this.pitch_width*this.scale;
     this.sPitchCanvas.nativeElement.height=this.pitch_height*this.scale*this.pitch_zoom;
     this.sPitchCx.lineWidth=1*(this.scale/2);
     this.sPitchCx.strokeStyle="rgba(0,255,0,1)";
     this.sPitchCx.font="lighter "+15+"pt Courier New";
     this.initPitchSample();
-    console.info("sample pitch canvas loaded");
-
-    console.debug("loading pitch context");
-    console.debug(this.pitchCanvasLeft.nativeElement);
+    
     this.pitchLeftCx=this.getContextFromElement(this.pitchCanvasLeft);
     this.pitchCanvasLeft.nativeElement.width=this.pitch_width*this.scale;
     this.pitchCanvasLeft.nativeElement.height=this.pitch_height*this.scale;
@@ -299,8 +294,8 @@ false
     this.pitchCanvasRight.nativeElement.height=this.pitch_height*this.scale;
     this.pitchRightCx.lineWidth=2*(this.scale/2);
     this.pitchRightCx.strokeStyle="rgba(0,255,0,1)";
-    this.updatePitchCanvas();
-    console.info("pitch canvas loaded");
+    
+    
   }
 
   
@@ -332,7 +327,7 @@ false
   this.yawCx.lineWidth=2*(this.scale/2);
   this.yawCx.strokeStyle="rgba(0,255,0,1)";
 
-  this.updateYawCanvas();
+  
 
     
   }

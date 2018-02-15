@@ -33,7 +33,15 @@ export class HudDataService implements OnDestroy {
 
   public getSensor(whatSensor: string)
   {
-    return this.sensors[whatSensor];
+    try
+    {
+      return this.sensors[whatSensor];
+    }
+    catch(e)
+    {
+      console.error(e);
+      return undefined;
+    }
   }
 
   public getSensorObservable(what: string): Observable<HudSensor> {
@@ -56,9 +64,18 @@ export class HudDataService implements OnDestroy {
 
   public getSensorLastDataRecorded(whatSensor:string):HudSensorData
   {
-    if (this.sensors[whatSensor]!==undefined)
+    try
     {
-      return this.sensors[whatSensor].data;
+      if (this.sensors[whatSensor]!=undefined)
+      {
+        
+        return this.sensors[whatSensor].data;
+      }
+    }
+    catch(e)
+    {
+      console.error(e);
+      return undefined;
     }
   }
 

@@ -27,7 +27,8 @@ import { HudMenuComponent } from './hud-menu/hud-menu.component';
 
 export function socketProvider() {
   //return new SockJS('http://piagatech.ddns.net:8090/greetings');
-  return new SockJS('http://localhost:8080/greetings');
+  //return new SockJS('http://localhost:8080/greetings');
+  return new SockJS('http://192.168.1.157:8080/greetings');
 }
 
 const stompConfig: StompConfig = {
