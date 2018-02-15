@@ -27,6 +27,10 @@ export class HudDataService implements OnDestroy {
     this.init();
   }
 
+  public getAllSensors(): HudSensor[] {
+    return Object.values(this.sensors).filter(s => s.details !== undefined);
+  }
+
   public getSensor(whatSensor: string)
   {
     return this.sensors[whatSensor];
@@ -84,6 +88,7 @@ export class HudDataService implements OnDestroy {
       let sensor = this.sensors[sensorData.sensor];
       if (sensor !== undefined) {
         sensor.data = sensorData;
+        sensor.subject.next(sensor);
       }
       /*else
       {
@@ -92,14 +97,13 @@ export class HudDataService implements OnDestroy {
         sensor.data = sensorData;
         //this.sensors.push(sensor);
       }*/
-      sensor.subject.next(sensor);
     });
 
     this.statusesSubscription = this.statuses.map((message: Message) => {
       return message.body;
     }).subscribe((msg_body: string) => {
       let sensorData = <HudSensorStatus>JSON.parse(msg_body);
-      var sensor = this.sensors[sensorData.sensor];
+      let sensor = this.sensors[sensorData.sensor];
       if (sensor !== undefined) {
         sensor.status = sensorData;
       } /*else {
@@ -176,6 +180,10 @@ export class HudDataService implements OnDestroy {
     }
     this.unsubscribe();
     this._stompService.disconnect();
+  }
+
+  public isConnected() {
+    return this.subscribed;
   }
 
   init() {

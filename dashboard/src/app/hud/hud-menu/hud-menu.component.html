@@ -1,0 +1,9 @@
+
+  <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="getSensors()">
+      <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #appMenu="matMenu">
+    <button *ngIf="!dataService.isConnected()" mat-menu-item (click)="dataService.connect()">Connect</button>
+    <button *ngIf="dataService.isConnected()" mat-menu-item (click)="dataService.disconnect()">Disconnect</button>
+    <button *ngFor="let s of sensors" mat-menu-item>{{s.details.sensor}}</button>
+  </mat-menu>

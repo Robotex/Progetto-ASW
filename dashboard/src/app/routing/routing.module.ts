@@ -6,7 +6,7 @@ import { HudComponent } from '../hud/hud.component';
 const routes: Routes = [
   { 
     path: '', 
-    redirectTo: '/home', 
+    redirectTo: '/hud', 
     pathMatch: 'full' 
   }, 
   {
