@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import {
   MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatListModule, MatSidenavModule,
   MatTooltipModule, MatMenuModule
@@ -52,13 +53,14 @@ const stompConfig: StompConfig = {
   reconnect_delay: 0,
 
   // Will log diagnostics on console
-  debug: true
+  debug: false
 };
 
 
 @NgModule({
   imports: [
     CommonModule,
+    HttpClientModule,
     MatSidenavModule,
     FlexLayoutModule,
     MatButtonModule, 

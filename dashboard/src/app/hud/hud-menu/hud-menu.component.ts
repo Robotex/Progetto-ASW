@@ -21,16 +21,16 @@ export class HudMenuComponent implements OnInit {
   icons: {
     [sensor: string]: string
   } = {
-    "LIGHT": "lightbulb_outline",
+    "LIGHT": "lightbulb-on-outline",
     "GPS": "navigation",
-    "BATTERY": "battery_std",
-    "ACCELEROMETER": "directions_run",
-    "CAMERA": "photo_camera",
-    "MAGNETIC": "explore",
+    "BATTERY": "battery",
+    "ACCELEROMETER": "run-fast",
+    "CAMERA": "camera",
+    "MAGNETIC": "magnet",
     "ORIENTATION": "cached",
-    "PRESSURE": "vertical_align_center",
-    "PROXIMITY": "network_wifi",
-    "TEMPERATURE": "wb_incandescent"
+    "PRESSURE": "weather-windy-variant",
+    "PROXIMITY": "ruler",
+    "TEMPERATURE": "mdi-oil-temperature"
   };
 
   constructor(private dataService: HudDataService) { }
