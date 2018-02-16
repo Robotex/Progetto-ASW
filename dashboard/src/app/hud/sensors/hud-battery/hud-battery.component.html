@@ -1,6 +1,5 @@
-<p>
-  BATTERIA: 
-  <span *ngIf="value<=20">SCARICO</span>
-  <span *ngIf="value>20&&value<=50">SCARICO</span>
-  <span *ngIf="value>50">CARICO</span>
-</p>
+<ng-container *ngIf="value">
+  <mat-icon *ngIf="value > 80" fontSet="mdi-set" fontIcon="mdi-battery" class="mdi-100px"></mat-icon>
+  <mat-icon *ngIf="value > 30 && value <= 80" fontSet="mdi-set" fontIcon="mdi-battery-50" class="mdi-100px"></mat-icon>
+  <mat-icon *ngIf="value < 30" fontSet="mdi-set" fontIcon="mdi-battery-30" class="mdi-100px" color="warn"></mat-icon>
+</ng-container>

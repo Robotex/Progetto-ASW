@@ -1,17 +1,32 @@
 
 
   <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="getSensors()">
+<<<<<<< HEAD
       <mat-icon svgIcon="thumbs-up"></mat-icon>
+=======
+      <mat-icon svgIcon="menu"></mat-icon>
+>>>>>>> eecec3207847efd636d331b409c66110a0d3d5d4
   </button>
   <mat-menu #appMenu="matMenu">
     <button *ngIf="!dataService.isConnected()" mat-menu-item (click)="dataService.connect()">Connect</button>
     <button *ngIf="dataService.isConnected()" mat-menu-item (click)="dataService.disconnect()">Disconnect</button>
     <button *ngFor="let s of sensors" mat-menu-item>
+<<<<<<< HEAD
       <span *ngIf="s.icon">
         <mat-icon class="{{s.icon}}"></mat-icon>
         
       </span>
       
+=======
+      <mat-icon *ngIf="s.icon" [svgIcon]="s.icon"></mat-icon>
+>>>>>>> eecec3207847efd636d331b409c66110a0d3d5d4
       {{s.name}}:{{s.status}}({{s.delay}}ms)
     </button>
+    <!--mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile *ngFor="let s of sensors">
+        <mat-icon *ngIf="s.icon" [svgIcon]="s.icon"></mat-icon>
+        {{s.name}}<br />
+        {{s.delay}}ms
+      </mat-grid-tile>   
+    </mat-grid-list-->
   </mat-menu>

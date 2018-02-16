@@ -1,0 +1,12 @@
+<h2 *ngIf="data.type !== undefined && data.type === HUD_DIALOG_TYPE.WARNING" mat-dialog-title>Warning</h2>
+<h2 *ngIf="data.type !== undefined && data.type === HUD_DIALOG_TYPE.ERROR" mat-dialog-title>Error</h2>
+<mat-dialog-content>
+  <ng-container *ngIf="data.type !== undefined && data.type !== HUD_DIALOG_TYPE.DEFAULT" [ngSwitch]="data.type">
+    <mat-icon *ngSwitchCase="HUD_DIALOG_TYPE.WARNING" fontSet="mdi-set" fontIcon="mdi-alert"></mat-icon>
+    <mat-icon *ngSwitchCase="HUD_DIALOG_TYPE.ERROR" fontSet="mdi-set" fontIcon="mdi-alert-circle" color="warn"></mat-icon>
+  </ng-container>
+  {{data.text}}
+</mat-dialog-content>
+<mat-dialog-actions *ngIf="data.timeout === undefined">
+    <button mat-button mat-dialog-close>Capito.</button>
+</mat-dialog-actions>

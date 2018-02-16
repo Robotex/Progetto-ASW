@@ -1,8 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import {
+<<<<<<< HEAD
   MatButtonModule, MatCardModule, MatGridListModule, MatListModule, MatSidenavModule,
   MatTooltipModule, MatMenuModule
+=======
+  MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatListModule, MatSidenavModule,
+  MatTooltipModule, MatMenuModule, MatDialogModule, MatSnackBarModule
+>>>>>>> eecec3207847efd636d331b409c66110a0d3d5d4
 } from '@angular/material';
 import {MatIconModule} from '@angular/material/icon'
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -25,6 +31,7 @@ import { HudCameraComponent } from './sensors/hud-camera/hud-camera.component';
 import { HudDataService } from './hud-data.service';
 import { HudAccelerometerComponent } from './sensors/hud-accelerometer/hud-accelerometer.component';
 import { HudMenuComponent } from './hud-menu/hud-menu.component';
+import { HudDialogComponent } from './hud-dialog/hud-dialog.component';
 
 export function socketProvider() {
   //return new SockJS('http://piagatech.ddns.net:8090/greetings');
@@ -60,6 +67,7 @@ const stompConfig: StompConfig = {
 @NgModule({
   imports: [
     CommonModule,
+    HttpClientModule,
     MatSidenavModule,
     FlexLayoutModule,
     MatButtonModule, 
@@ -70,16 +78,21 @@ const stompConfig: StompConfig = {
     MatSidenavModule,
     MatTooltipModule,
     MatMenuModule,
+    MatDialogModule,
+    MatSnackBarModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBXkaigCdSAS0Ji-hblkd6AfzDxbq_XIZo'
     }),
     routing
   ],
-  declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudOrientationComponent, HudCameraComponent, HudAccelerometerComponent, HudMenuComponent],
+  declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudOrientationComponent, HudCameraComponent, HudAccelerometerComponent, HudMenuComponent, HudDialogComponent],
   providers: [StompRService,
     {
       provide: StompConfig,
       useValue: stompConfig
-    }, HudDataService]
+    }, HudDataService],
+  entryComponents: [
+    HudDialogComponent
+  ]
 })
 export class HudModule { }

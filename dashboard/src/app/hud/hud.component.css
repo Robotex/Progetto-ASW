@@ -9,6 +9,7 @@ app-hud-menu
     
 }
 
+<<<<<<< HEAD
 app-hud-camera
 {
     height: 100%;
@@ -154,3 +155,21 @@ app-hud-menu
     left: 0px;
 }
 
+=======
+.toolbar {
+    z-index: 3;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.toolbar .mat-icon * {
+    font-size: 100px;
+}
+
+.mdi-100px.mdi-set, .mdi-100px.mdi:before {
+    font-size: 100px;
+}
+>>>>>>> eecec3207847efd636d331b409c66110a0d3d5d4

@@ -24,16 +24,22 @@ export class HudMenuComponent implements OnInit {
   icons: {
     [sensor: string]: string
   } = {
-    "LIGHT": "lightbulb_outline",
+    "LIGHT": "lightbulb-on-outline",
     "GPS": "navigation",
-    "BATTERY": "battery_std",
-    "ACCELEROMETER": "directions_run",
-    "CAMERA": "photo_camera",
-    "MAGNETIC": "explore",
+    "BATTERY": "battery",
+    "ACCELEROMETER": "run-fast",
+    "CAMERA": "camera",
+    "MAGNETIC": "magnet",
     "ORIENTATION": "cached",
+<<<<<<< HEAD
     "PRESSURE": "vertical_align_center",
     "PROXIMITY": "altimeter",
     "TEMPERATURE": "wb_incandescent"
+=======
+    "PRESSURE": "weather-windy-variant",
+    "PROXIMITY": "ruler",
+    "TEMPERATURE": "oil-temperature"
+>>>>>>> eecec3207847efd636d331b409c66110a0d3d5d4
   };
 
   constructor(private dataService: HudDataService) { }
@@ -48,7 +54,7 @@ export class HudMenuComponent implements OnInit {
         name: s.details.sensor,
         icon: this.icons[s.details.sensor],
         status: (s.status === undefined ? "?" : s.status.value),
-        delay: s.lastUpdate - s.data.timestamp - s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]
+        delay: s.lastUpdate - s.data.timestamp //- s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]
       });
     }
   }
