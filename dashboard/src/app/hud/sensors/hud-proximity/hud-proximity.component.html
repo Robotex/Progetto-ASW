@@ -1,3 +1,4 @@
-<p>
-  hud-proximity works!
-</p>
+<ng-container *ngIf="value">
+  <mat-icon *ngIf="value > warning_threshold" fontSet="mdi-set" fontIcon="mdi-ruler" class="mdi-100px"></mat-icon>
+  <mat-icon *ngIf="value <= warning_threshold" fontSet="mdi-set" fontIcon="mdi-ruler" class="mdi-100px" color="warn"></mat-icon>
+</ng-container>
