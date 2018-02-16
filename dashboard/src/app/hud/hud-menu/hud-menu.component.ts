@@ -45,7 +45,7 @@ export class HudMenuComponent implements OnInit {
         name: s.details.sensor,
         icon: this.icons[s.details.sensor],
         status: (s.status === undefined ? "?" : s.status.value),
-        delay: s.lastUpdate - s.data.timestamp - s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]
+        delay: s.lastUpdate - s.data.timestamp //- s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]
       });
     }
   }
