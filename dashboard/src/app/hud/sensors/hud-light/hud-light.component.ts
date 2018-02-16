@@ -17,7 +17,6 @@ export class HudLightComponent implements OnInit {
   getSensor(): void {
     this.dataService.getSensorObservable(this.sensor_type).subscribe(sensor=>{
       this.value = sensor.data.value;
-      console.log(this.value);
       if (this.sensorProperties==null&&sensor.properties!=null&&sensor.properties!=undefined)
       {
         this.sensorProperties=sensor.properties;

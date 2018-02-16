@@ -1,13 +1,17 @@
 
 
   <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="getSensors()">
-      <mat-icon>more_vert</mat-icon>
+      <mat-icon svgIcon="thumbs-up"></mat-icon>
   </button>
   <mat-menu #appMenu="matMenu">
     <button *ngIf="!dataService.isConnected()" mat-menu-item (click)="dataService.connect()">Connect</button>
     <button *ngIf="dataService.isConnected()" mat-menu-item (click)="dataService.disconnect()">Disconnect</button>
     <button *ngFor="let s of sensors" mat-menu-item>
-      <span *ngIf="s.icon"><mat-icon>{{s.icon}}</mat-icon></span>
+      <span *ngIf="s.icon">
+        <mat-icon class="{{s.icon}}"></mat-icon>
+        
+      </span>
+      
       {{s.name}}:{{s.status}}({{s.delay}}ms)
     </button>
   </mat-menu>

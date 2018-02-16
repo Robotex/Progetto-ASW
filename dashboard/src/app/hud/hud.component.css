@@ -1,15 +1,156 @@
 .greenClass { background-color: green }
 .redClass { background-color: red }
 
+
+
 app-hud-menu
 {
     z-index:3;
     
 }
 
+app-hud-camera
+{
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    position: relative;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    align-items: center;
+}
+
+div#hud-container
+{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    flex-direction: row;
+    position: absolute;
+}
+
+@media only screen
+{
+    @media (orientation:landscape)
+    {
+        app-hud-camera
+        {
+            justify-content: center;
+        }
+
+        
+        div#hud-container
+        {
+            width:100%;
+            height:100%;
+        }
+
+        footer
+        {
+            position: absolute;
+            width: 25%;
+            height: 28%;
+            bottom: 3%;
+            left: 3%;
+        }
+    }
+
+    @media (orientation:portrait)
+    {
+        app-hud-camera
+        {
+            justify-content: flex-start;
+        }
+
+        div#hud-container
+        {
+            width:100%;
+            flex-wrap: wrap;
+        }
+
+        footer
+        {
+            
+            width: 25%;
+            height: 28%;
+            
+        }
+    }
+}
+
+
+
 .mat-icon
 {
     width:30px;
     height:30px;
+}
+
+
+
+
+
+#hud-container div#center
+{
+    display:none;
+}
+
+header
+{
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    z-index: 5;
+}
+
+nav
+{
+    position: absolute;
+    left: 5%;
+    top: 1%;
+    z-index: 3;
+}
+ 
+
+
+
+app-hud-map
+{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left:0px;
+}
+
+@media only screen and (orientation:portrait)
+{
+    app-hud-map
+    {
+        
+    }
+}
+
+app-hud-status
+{
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+app-hud-menu
+{
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 

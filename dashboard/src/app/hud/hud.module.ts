@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatListModule, MatSidenavModule,
+  MatButtonModule, MatCardModule, MatGridListModule, MatListModule, MatSidenavModule,
   MatTooltipModule, MatMenuModule
 } from '@angular/material';
+import {MatIconModule} from '@angular/material/icon'
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HudComponent } from '../hud/hud.component';
 import { StompConfig, StompRService } from '@stomp/ng2-stompjs';
@@ -26,9 +27,9 @@ import { HudAccelerometerComponent } from './sensors/hud-accelerometer/hud-accel
 import { HudMenuComponent } from './hud-menu/hud-menu.component';
 
 export function socketProvider() {
-  return new SockJS('http://piagatech.ddns.net:8090/greetings');
+  //return new SockJS('http://piagatech.ddns.net:8090/greetings');
   //return new SockJS('http://localhost:8080/greetings');
-  //return new SockJS('http://192.168.1.157:8080/greetings');
+  return new SockJS('http://192.168.1.157:8080/greetings');
 }
 
 const stompConfig: StompConfig = {
@@ -52,7 +53,7 @@ const stompConfig: StompConfig = {
   reconnect_delay: 0,
 
   // Will log diagnostics on console
-  debug: true
+  debug: false
 };
 
 

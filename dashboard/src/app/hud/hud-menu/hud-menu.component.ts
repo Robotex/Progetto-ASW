@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HudDataService } from '../hud-data.service';
 import { HudSensor } from '../model/hud-sensor';
 import { HUD_SENSORS_DETAIL_NAME } from '../model/hud-sensors-detail-enum';
+import {MatIconRegistry} from '@angular/material';
+
+
 
 class HudMenuSensor {
   icon: string;
@@ -29,7 +32,7 @@ export class HudMenuComponent implements OnInit {
     "MAGNETIC": "explore",
     "ORIENTATION": "cached",
     "PRESSURE": "vertical_align_center",
-    "PROXIMITY": "network_wifi",
+    "PROXIMITY": "altimeter",
     "TEMPERATURE": "wb_incandescent"
   };
 
