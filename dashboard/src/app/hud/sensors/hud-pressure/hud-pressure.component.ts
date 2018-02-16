@@ -9,7 +9,7 @@ import { HudDataService } from '../../hud-data.service';
 export class HudPressureComponent implements OnInit {
 
   value: number = 0;
-  private sensor_type="TEMPERATURE";
+  private sensor_type="PRESSURE";
   private sensorProperties:{[key:string]:any};
 
   constructor(private dataService: HudDataService) { }

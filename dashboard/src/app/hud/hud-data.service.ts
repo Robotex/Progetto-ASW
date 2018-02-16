@@ -106,7 +106,7 @@ export class HudDataService implements OnDestroy {
       let sensor = this.sensors[sensorData.sensor];
       if (sensor !== undefined) {
         sensor.data = sensorData;
-        sensor.delay = now-sensor.data.timestamp-sensor.properties[HUD_SENSORS_DETAIL_NAME.DELAY]
+        sensor.lastUpdate = now;
         sensor.subject.next(sensor);
       }
       /*else
@@ -192,6 +192,9 @@ export class HudDataService implements OnDestroy {
     this._stompService.config = this.stompConfig;
     this._stompService.connectObservable.subscribe(x=>{
       this.subscribe();
+    });
+    this._stompService.errorSubject.subscribe(err=>{
+      this.disconnect();
     });
     this._stompService.initAndConnect();
   }
