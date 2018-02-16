@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HudDataService } from '../../hud-data.service';
+import { MatDialog } from '@angular/material';
+import { HudDialogComponent, HUD_DIALOG_TYPE } from '../../hud-dialog/hud-dialog.component';
 import { HUD_SENSORS_DETAIL_NAME } from '../../model/hud-sensors-detail-enum';
 
 @Component({
@@ -14,12 +16,11 @@ export class HudProximityComponent implements OnInit {
   private sensor_type="PROXIMITY";
   private sensorProperties:{[key:string]:any};
 
-  constructor(private dataService: HudDataService) { }
+  constructor(private dataService: HudDataService, public dialog: MatDialog) { }
 
   getSensor(): void {
     this.dataService.getSensorObservable(this.sensor_type).subscribe(sensor=>{
       this.value = sensor.data.value;
-      console.log(this.value);
       if (this.sensorProperties==null&&sensor.properties!=null&&sensor.properties!=undefined)
       {
         this.sensorProperties=sensor.properties;
@@ -30,6 +31,14 @@ export class HudProximityComponent implements OnInit {
       if (this.sensorProperties!=null)
       {
         this.warning_threshold = this.sensorProperties[HUD_SENSORS_DETAIL_NAME.MAX_VALUE] * 0.10;
+
+        this.dialog.open(HudDialogComponent, {
+          data: {
+            timeout: 2000,
+            type: HUD_DIALOG_TYPE.WARNING,
+            text: 'Ti stai avvicinando troppo!'
+          }
+        });
       }
     })
   }
