@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { StompRService, StompState } from '@stomp/ng2-stompjs';
+import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -13,7 +14,7 @@ export class HudStatusComponent implements OnInit {
 
   public state: Observable<string>;
 
-  constructor(private _stompService: StompRService) { }
+  constructor(private _stompService: StompRService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.state = this._stompService.state.map((state: number) => StompState[state]);
@@ -21,7 +22,9 @@ export class HudStatusComponent implements OnInit {
       alert('Errore di connesione! [' + err + ']');
     });
     this._stompService.connectObservable.subscribe(x=>{
-      alert('Connessione avvenuta!');
+      this.snackBar.open('Connessione avvenuta con successo!', '', {
+        duration: 2000
+      });
     });
   }
 

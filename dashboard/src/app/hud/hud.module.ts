@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {
   MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatListModule, MatSidenavModule,
-  MatTooltipModule, MatMenuModule
+  MatTooltipModule, MatMenuModule, MatDialogModule, MatSnackBarModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HudComponent } from '../hud/hud.component';
@@ -71,6 +71,8 @@ const stompConfig: StompConfig = {
     MatSidenavModule,
     MatTooltipModule,
     MatMenuModule,
+    MatDialogModule,
+    MatSnackBarModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBXkaigCdSAS0Ji-hblkd6AfzDxbq_XIZo'
     }),
