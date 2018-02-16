@@ -9,6 +9,7 @@ export class HudSensor {
     public details: HudSensorDetails;
     public status: HudSensorStatus;
     public subject: Subject<HudSensor>;
+    public delay: number;
 
     public properties: {[name: string]: any};
 

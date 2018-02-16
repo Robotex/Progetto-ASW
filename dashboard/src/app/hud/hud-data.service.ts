@@ -101,10 +101,12 @@ export class HudDataService implements OnDestroy {
     this.updatesSubscription = this.updates.map((message: Message) => {
       return message.body;
     }).subscribe((msg_body: string) => {
+      let now = (new Date).getTime();
       let sensorData = <HudSensorData>JSON.parse(msg_body);
       let sensor = this.sensors[sensorData.sensor];
       if (sensor !== undefined) {
         sensor.data = sensorData;
+        sensor.delay = now-sensor.data.timestamp-sensor.properties[HUD_SENSORS_DETAIL_NAME.DELAY]
         sensor.subject.next(sensor);
       }
       /*else

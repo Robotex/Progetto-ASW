@@ -26,9 +26,9 @@ import { HudAccelerometerComponent } from './sensors/hud-accelerometer/hud-accel
 import { HudMenuComponent } from './hud-menu/hud-menu.component';
 
 export function socketProvider() {
-  //return new SockJS('http://piagatech.ddns.net:8090/greetings');
+  return new SockJS('http://piagatech.ddns.net:8090/greetings');
   //return new SockJS('http://localhost:8080/greetings');
-  return new SockJS('http://192.168.1.157:8080/greetings');
+  //return new SockJS('http://192.168.1.157:8080/greetings');
 }
 
 const stompConfig: StompConfig = {
@@ -52,7 +52,7 @@ const stompConfig: StompConfig = {
   reconnect_delay: 5000,
 
   // Will log diagnostics on console
-  debug: false
+  debug: true
 };
 
 
