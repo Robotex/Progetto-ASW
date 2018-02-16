@@ -6,7 +6,7 @@ import {
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HudComponent } from '../hud/hud.component';
-import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+import { StompConfig, StompRService } from '@stomp/ng2-stompjs';
 import { routing } from './hud.routing';
 import * as SockJS from 'sockjs-client';
 import { HudStatusComponent } from './hud-status/hud-status.component';
@@ -26,9 +26,9 @@ import { HudAccelerometerComponent } from './sensors/hud-accelerometer/hud-accel
 import { HudMenuComponent } from './hud-menu/hud-menu.component';
 
 export function socketProvider() {
-  //return new SockJS('http://piagatech.ddns.net:8090/greetings');
+  return new SockJS('http://piagatech.ddns.net:8090/greetings');
   //return new SockJS('http://localhost:8080/greetings');
-  return new SockJS('http://192.168.1.157:8080/greetings');
+  //return new SockJS('http://192.168.1.157:8080/greetings');
 }
 
 const stompConfig: StompConfig = {
@@ -49,10 +49,10 @@ const stompConfig: StompConfig = {
   // Wait in milliseconds before attempting auto reconnect
   // Set to 0 to disable
   // Typical value 5000 (5 seconds)
-  reconnect_delay: 5000,
+  reconnect_delay: 0,
 
   // Will log diagnostics on console
-  debug: false
+  debug: true
 };
 
 
@@ -75,7 +75,7 @@ const stompConfig: StompConfig = {
     routing
   ],
   declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudOrientationComponent, HudCameraComponent, HudAccelerometerComponent, HudMenuComponent],
-  providers: [StompService,
+  providers: [StompRService,
     {
       provide: StompConfig,
       useValue: stompConfig
