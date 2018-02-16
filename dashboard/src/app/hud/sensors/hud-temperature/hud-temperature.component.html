@@ -1,4 +1,4 @@
 <ng-container *ngIf="value">
   <mat-icon *ngIf="value <= warning_threshold" fontSet="mdi-set" fontIcon="mdi-oil-temperature" class="mdi-100px"></mat-icon>
-  <mat-icon *ngElse fontSet="mdi-set" fontIcon="mdi-oil-temperature" class="mdi-100px" color="warn"></mat-icon>
+  <mat-icon *ngIf="value > warning_threshold" fontSet="mdi-set" fontIcon="mdi-oil-temperature" class="mdi-100px" color="warn"></mat-icon>
 </ng-container>
