@@ -217,7 +217,7 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
     
     
       
-    console.log(iteration+"|"+stepHeight+"|"+numberToPrint+"");
+    
     this.sPitchCx.beginPath()
     let x1,x2,x3,x4;
     x1=0;
