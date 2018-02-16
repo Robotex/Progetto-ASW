@@ -31,15 +31,9 @@ export class HudMenuComponent implements OnInit {
     "CAMERA": "camera",
     "MAGNETIC": "magnet",
     "ORIENTATION": "cached",
-<<<<<<< HEAD
-    "PRESSURE": "vertical_align_center",
-    "PROXIMITY": "altimeter",
-    "TEMPERATURE": "wb_incandescent"
-=======
     "PRESSURE": "weather-windy-variant",
     "PROXIMITY": "ruler",
     "TEMPERATURE": "oil-temperature"
->>>>>>> eecec3207847efd636d331b409c66110a0d3d5d4
   };
 
   constructor(private dataService: HudDataService) { }

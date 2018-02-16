@@ -69,12 +69,6 @@ app-hud
 
 
 
-<<<<<<< HEAD
-=======
-.pitchCanvas
-{
-    align-self:center;
-}
 
 button.mat-menu-item {
     line-height: 24px !important;
@@ -90,4 +84,3 @@ a.mat-menu-item > mat-icon {
 .mdi-100px.mdi-set, .mdi-100px.mdi:before {
     font-size: 100px;
 }
->>>>>>> eecec3207847efd636d331b409c66110a0d3d5d4

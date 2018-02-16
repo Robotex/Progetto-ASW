@@ -2,15 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {
-<<<<<<< HEAD
-  MatButtonModule, MatCardModule, MatGridListModule, MatListModule, MatSidenavModule,
-  MatTooltipModule, MatMenuModule
-=======
   MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatListModule, MatSidenavModule,
   MatTooltipModule, MatMenuModule, MatDialogModule, MatSnackBarModule
->>>>>>> eecec3207847efd636d331b409c66110a0d3d5d4
 } from '@angular/material';
-import {MatIconModule} from '@angular/material/icon'
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HudComponent } from '../hud/hud.component';
 import { StompConfig, StompRService } from '@stomp/ng2-stompjs';

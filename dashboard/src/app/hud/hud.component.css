@@ -9,7 +9,6 @@ app-hud-menu
     
 }
 
-<<<<<<< HEAD
 app-hud-camera
 {
     height: 100%;
@@ -155,7 +154,6 @@ app-hud-menu
     left: 0px;
 }
 
-=======
 .toolbar {
     z-index: 3;
     position: absolute;
@@ -172,4 +170,3 @@ app-hud-menu
 .mdi-100px.mdi-set, .mdi-100px.mdi:before {
     font-size: 100px;
 }
->>>>>>> eecec3207847efd636d331b409c66110a0d3d5d4
