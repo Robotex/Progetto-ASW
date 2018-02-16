@@ -25,11 +25,12 @@ import { HudCameraComponent } from './sensors/hud-camera/hud-camera.component';
 import { HudDataService } from './hud-data.service';
 import { HudAccelerometerComponent } from './sensors/hud-accelerometer/hud-accelerometer.component';
 import { HudMenuComponent } from './hud-menu/hud-menu.component';
+import { HudDialogComponent } from './hud-dialog/hud-dialog.component';
 
 export function socketProvider() {
-  return new SockJS('http://piagatech.ddns.net:8090/greetings');
+  //return new SockJS('http://piagatech.ddns.net:8090/greetings');
   //return new SockJS('http://localhost:8080/greetings');
-  //return new SockJS('http://192.168.1.157:8080/greetings');
+  return new SockJS('http://192.168.1.157:8080/greetings');
 }
 
 const stompConfig: StompConfig = {
@@ -78,11 +79,14 @@ const stompConfig: StompConfig = {
     }),
     routing
   ],
-  declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudOrientationComponent, HudCameraComponent, HudAccelerometerComponent, HudMenuComponent],
+  declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudOrientationComponent, HudCameraComponent, HudAccelerometerComponent, HudMenuComponent, HudDialogComponent],
   providers: [StompRService,
     {
       provide: StompConfig,
       useValue: stompConfig
-    }, HudDataService]
+    }, HudDataService],
+  entryComponents: [
+    HudDialogComponent
+  ]
 })
 export class HudModule { }
