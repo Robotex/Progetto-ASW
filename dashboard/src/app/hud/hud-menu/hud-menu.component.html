@@ -1,6 +1,6 @@
 
 
-  <button mat-icon-button [matMenuTriggerFor]="appMenu" (click)="getSensors()">
+  <button mat-icon-button [matMenuTriggerFor]="appMenu" (menuOpened)="onMenuOpened($event)" (menuClosed)="onMenuClosed($event)">
       <mat-icon svgIcon="menu"></mat-icon>
   </button>
   <mat-menu #appMenu="matMenu">

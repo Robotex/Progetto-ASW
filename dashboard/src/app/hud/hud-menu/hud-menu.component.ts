@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HudDataService } from '../hud-data.service';
 import { HudSensor } from '../model/hud-sensor';
 import { HUD_SENSORS_DETAIL_NAME } from '../model/hud-sensors-detail-enum';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 class HudMenuSensor {
   icon: string;
@@ -33,7 +36,22 @@ export class HudMenuComponent implements OnInit {
     "TEMPERATURE": "oil-temperature"
   };
 
+  private isOpen: boolean = false;
+  private sensorsUpdater: Subscription;
+
   constructor(private dataService: HudDataService) { }
+
+  onMenuOpened(): void {
+    let timer = TimerObservable.create(0, 1000);
+    this.sensorsUpdater = timer.subscribe(t => {
+      this.getSensors();
+    });
+  }
+
+  onMenuClosed(): void {
+    this.sensorsUpdater.unsubscribe();
+    this.sensorsUpdater = undefined;
+  }
 
   getSensors(): void {
     let rawSensors = this.dataService.getAllSensors();
