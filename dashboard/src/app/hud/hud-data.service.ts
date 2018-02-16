@@ -5,7 +5,7 @@ import { HudSensorDetails } from './model/hud-sensor-details';
 import { HudSensorStatus } from './model/hud-sensor-status';
 import { Message } from '@stomp/stompjs';
 import { Observable } from 'rxjs/Observable';
-import { StompService } from '@stomp/ng2-stompjs';
+import { StompRService, StompConfig } from '@stomp/ng2-stompjs';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/of'
 import { HUD_SENSORS_DETAIL_NAME } from './model/hud-sensors-detail-enum';
@@ -23,7 +23,7 @@ export class HudDataService implements OnDestroy {
 
   public sensors: { [type: string]: HudSensor} = {};
 
-  constructor(private _stompService: StompService) { 
+  constructor(private stompConfig: StompConfig, private _stompService: StompRService) { 
     this.init();
   }
 
@@ -101,10 +101,12 @@ export class HudDataService implements OnDestroy {
     this.updatesSubscription = this.updates.map((message: Message) => {
       return message.body;
     }).subscribe((msg_body: string) => {
+      let now = (new Date).getTime();
       let sensorData = <HudSensorData>JSON.parse(msg_body);
       let sensor = this.sensors[sensorData.sensor];
       if (sensor !== undefined) {
         sensor.data = sensorData;
+        sensor.lastUpdate = now;
         sensor.subject.next(sensor);
       }
       /*else
@@ -187,8 +189,14 @@ export class HudDataService implements OnDestroy {
     if (this._stompService.connected()) {
       return;
     }
+    this._stompService.config = this.stompConfig;
+    this._stompService.connectObservable.subscribe(x=>{
+      this.subscribe();
+    });
+    this._stompService.errorSubject.subscribe(err=>{
+      this.disconnect();
+    });
     this._stompService.initAndConnect();
-    this.subscribe();
   }
 
   public disconnect() {
@@ -206,12 +214,11 @@ export class HudDataService implements OnDestroy {
   init() {
     this.subscribed = false;
 
-    this.subscribe();
+    //this.subscribe();
   }
 
   // Callbacks
   ngOnDestroy() {
-    this.unsubscribe();
     this.disconnect();
   }
 

@@ -4,5 +4,5 @@ export interface HudSensorDetails {
     generic: string;
     sensor: string;
     value: {[key: string]: any};
-    timestamp: string;
+    timestamp: number;
 }
