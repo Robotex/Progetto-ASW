@@ -6,7 +6,7 @@ import {
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HudComponent } from '../hud/hud.component';
-import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+import { StompConfig, StompRService } from '@stomp/ng2-stompjs';
 import { routing } from './hud.routing';
 import * as SockJS from 'sockjs-client';
 import { HudStatusComponent } from './hud-status/hud-status.component';
@@ -75,7 +75,7 @@ const stompConfig: StompConfig = {
     routing
   ],
   declarations: [HudComponent, HudStatusComponent, HudMapComponent, HudBatteryComponent, HudTemperatureComponent, HudPressureComponent, HudLightComponent, HudProximityComponent, HudMagneticComponent, HudOrientationComponent, HudCameraComponent, HudAccelerometerComponent, HudMenuComponent],
-  providers: [StompService,
+  providers: [StompRService,
     {
       provide: StompConfig,
       useValue: stompConfig
