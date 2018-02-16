@@ -190,8 +190,10 @@ export class HudDataService implements OnDestroy {
       return;
     }
     this._stompService.config = this.stompConfig;
+    this._stompService.connectObservable.subscribe(x=>{
+      this.subscribe();
+    });
     this._stompService.initAndConnect();
-    this.subscribe();
   }
 
   public disconnect() {
