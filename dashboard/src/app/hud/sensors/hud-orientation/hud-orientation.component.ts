@@ -145,6 +145,18 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
   updatePitchCanvas()
   {
     
+    let light=this.dataService.getSensorLastDataRecorded("LIGHT").value;
+    let lightMax:number=this.dataService.getSensorProperty("LIGHT",HUD_SENSORS_DETAIL_NAME.MAX_VALUE);
+    if (light!=undefined&&lightMax!=undefined)
+    {
+      this.pitchLeftCx.globalAlpha=this.min_opacity+((light*0.8)/lightMax);
+      this.pitchRightCx.globalAlpha=this.min_opacity+((light*0.8)/lightMax);
+    }
+    else
+    {
+      this.pitchLeftCx.globalAlpha=1;
+      this.pitchRightCx.globalAlpha=1;
+    }
     
     let translateY=-this.pitch_height*this.scale/2 //PARTO DA METÀ
     +((this.pitch_height*this.scale*this.pitch_zoom)/180) //MAPPO I VALORI DEL PITCH CON L'ALTEZZA DEL CANVAS
@@ -162,6 +174,16 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
 
   updateYawCanvas()
   {
+    let light=this.dataService.getSensorLastDataRecorded("LIGHT").value;
+    let lightMax:number=this.dataService.getSensorProperty("LIGHT",HUD_SENSORS_DETAIL_NAME.MAX_VALUE);
+    if (light!=undefined&&lightMax!=undefined)
+    {
+      this.yawCx.globalAlpha=this.min_opacity+((light*0.8)/lightMax);
+    }
+    else
+      this.yawCx.globalAlpha=1;
+
+
     this.yawCx.clearRect(0,0,this.roll_width*this.scale,this.yaw_height*this.scale);
     let width=(this.roll_width*this.scale);
     let y1=10*this.scale;    
