@@ -196,3 +196,7 @@ a.mat-menu-item > mat-icon {
     height: 24px;
     width: 24px;
 }
+
+.mdi-100px.mdi-set, .mdi-100px.mdi:before {
+    font-size: 100px;
+}

@@ -7,9 +7,19 @@ app-hud-menu
     
 }
 
-.mat-icon
-{
-    width:30px;
-    height:30px;
+.toolbar {
+    z-index: 3;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+.toolbar .mat-icon * {
+    font-size: 100px;
+}
+
+.mdi-100px.mdi-set, .mdi-100px.mdi:before {
+    font-size: 100px;
+}

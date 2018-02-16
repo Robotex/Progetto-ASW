@@ -30,7 +30,7 @@ export class HudMenuComponent implements OnInit {
     "ORIENTATION": "cached",
     "PRESSURE": "weather-windy-variant",
     "PROXIMITY": "ruler",
-    "TEMPERATURE": "mdi-oil-temperature"
+    "TEMPERATURE": "oil-temperature"
   };
 
   constructor(private dataService: HudDataService) { }

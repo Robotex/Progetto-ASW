@@ -16,7 +16,7 @@ export class HudBatteryComponent implements OnInit {
 
   getSensor(): void {
     this.dataService.getSensorObservable(this.sensor_type).subscribe(sensor=>{
-      let vector=sensor.data.value;
+      this.value = sensor.data.value;
       if (this.sensorProperties==null&&sensor.properties!=null&&sensor.properties!=undefined)
       {
         this.sensorProperties=sensor.properties;
