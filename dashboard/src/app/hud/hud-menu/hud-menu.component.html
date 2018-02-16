@@ -6,8 +6,15 @@
   <mat-menu #appMenu="matMenu">
     <button *ngIf="!dataService.isConnected()" mat-menu-item (click)="dataService.connect()">Connect</button>
     <button *ngIf="dataService.isConnected()" mat-menu-item (click)="dataService.disconnect()">Disconnect</button>
-    <button *ngFor="let s of sensors" mat-menu-item>
-      <span *ngIf="s.icon"><mat-icon [svgIcon]="s.icon"></mat-icon></span>
+    <<button *ngFor="let s of sensors" mat-menu-item>
+      <mat-icon *ngIf="s.icon" [svgIcon]="s.icon"></mat-icon>
       {{s.name}}:{{s.status}}({{s.delay}}ms)
     </button>
+    <!--mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile *ngFor="let s of sensors">
+        <mat-icon *ngIf="s.icon" [svgIcon]="s.icon"></mat-icon>
+        {{s.name}}<br />
+        {{s.delay}}ms
+      </mat-grid-tile>   
+    </mat-grid-list-->
   </mat-menu>
