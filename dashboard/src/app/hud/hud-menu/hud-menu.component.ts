@@ -42,6 +42,7 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
   private sensorsUpdater: Subscription;
   showSearchButton: boolean;
   speechData: string;
+  voiceStarted=false;
 
   constructor(private dataService: HudDataService, private speechService:SpeechService) {
     
@@ -52,6 +53,18 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
     this.sensorsUpdater = timer.subscribe(t => {
       this.getSensors();
     });
+    
+  }
+
+  voiceStart()
+  {
+    this.voiceStarted=true;
+    this.activateSpeechSearchMovie();
+  }
+  voiceStop()
+  {
+    this.voiceStarted=false;
+    
   }
 
   onMenuClosed(): void {
@@ -87,6 +100,14 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
         //listener
         (value) => {
             this.speechData = value;
+            if (this.speechData=="connect")
+            {
+              this.dataService.connect();
+            }
+            if (this.speechData =="disconnect")
+            {
+              this.dataService.disconnect();
+            }
             console.log(value);
         },
         //errror
@@ -109,8 +130,15 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
     
   }
 
+  activateMic()
+  {
+    
+    
+  }
+
   ngAfterViewInit(): void {
-    this.activateSpeechSearchMovie();
+    
+    
   }
 
   ngOnDestroy()

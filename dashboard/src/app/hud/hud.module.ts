@@ -30,9 +30,9 @@ import { HudDialogComponent } from './hud-dialog/hud-dialog.component';
 import {SpeechService} from './speech.service'
 
 export function socketProvider() {
-  return new SockJS('http://piagatech.ddns.net:8090/greetings');
+  //return new SockJS('http://piagatech.ddns.net:8090/greetings');
   //return new SockJS('http://localhost:8080/greetings');
-  //return new SockJS('http://192.168.1.157:8080/greetings');
+  return new SockJS('https://piagatech.ddns.net:8444/greetings');
 }
 
 const stompConfig: StompConfig = {

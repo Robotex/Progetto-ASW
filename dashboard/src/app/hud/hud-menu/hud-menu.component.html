@@ -22,3 +22,6 @@
       </mat-grid-tile>   
     </mat-grid-list-->
   </mat-menu>
+
+  <button *ngIf="!this.voiceStarted" (click)="voiceStart()">VOCE</button>
+  <button *ngIf="this.voiceStarted" (click)="voiceStop()">VOCE</button>
