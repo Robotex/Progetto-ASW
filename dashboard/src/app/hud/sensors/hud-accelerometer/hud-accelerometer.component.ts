@@ -20,6 +20,9 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
   minSignal = 0;
   min_opacity:number=0.2;
 
+  light:number;
+  lightMax:number;
+
   width:number = 102;
   height:number=102;
   scale:number=2;
@@ -44,7 +47,18 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
       }
       if (this.sensorProperties!=null)  
         this.updateCanvas();
-      
+
+      if (this.lightMax==0 && this.dataService.getSensorProperty("LIGHT",HUD_SENSORS_DETAIL_NAME.MAX_VALUE)!=undefined)
+      {
+          this.lightMax=this.dataService.getSensorProperty("LIGHT",HUD_SENSORS_DETAIL_NAME.MAX_VALUE);
+      }
+
+      let lightValue=this.dataService.getSensorLastDataRecorded("LIGHT");
+        
+      if (lightValue!=undefined && lightValue.value!=undefined && this.lightMax!=0)
+      {
+        this.light=(1-this.min_opacity)*(lightValue.value/this.lightMax);
+      }
       
     })
     
@@ -278,15 +292,7 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
   { 
     this.cx.restore(); 
     this.cx.clearRect(0,0,this.width*this.scale,this.height*this.scale);
-    let light=this.dataService.getSensorLastDataRecorded("LIGHT").value;
-    let lightMax:number=this.dataService.getSensorProperty("LIGHT",HUD_SENSORS_DETAIL_NAME.MAX_VALUE);
-    if (light!=undefined&&lightMax!=undefined)
-    {
-      this.cx.globalAlpha=this.min_opacity+((light*0.8)/lightMax);
-    }
-    else
-      this.cx.globalAlpha=1;
-    
+    this.cx.globalAlpha=this.min_opacity + this.light;
     this.drawArrowsInside(this.y,this.maxSignal,this.minSignal);
     this.drawOrthoArrows(this.x,this.maxSignal,this.minSignal,90);
     this.drawOrthoArrows(this.z,this.maxSignal,this.minSignal,0);
