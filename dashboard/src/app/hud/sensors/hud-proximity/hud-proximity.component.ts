@@ -13,6 +13,7 @@ export class HudProximityComponent implements OnInit {
 
   value: number;
   warning_threshold: number;
+  warning_threshold_triggered: boolean = false;
   private sensor_type="PROXIMITY";
   private sensorProperties:{[key:string]:any};
 
@@ -32,13 +33,18 @@ export class HudProximityComponent implements OnInit {
       {
         this.warning_threshold = this.sensorProperties[HUD_SENSORS_DETAIL_NAME.MAX_VALUE] * 0.10;
 
-        this.dialog.open(HudDialogComponent, {
-          data: {
-            timeout: 2000,
-            type: HUD_DIALOG_TYPE.WARNING,
-            text: 'Ti stai avvicinando troppo!'
-          }
-        });
+        if (this.value <= this.warning_threshold && !this.warning_threshold_triggered) {
+          this.dialog.open(HudDialogComponent, {
+            data: {
+              timeout: 2000,
+              type: HUD_DIALOG_TYPE.WARNING,
+              text: 'Ti stai avvicinando troppo!'
+            }
+          });
+          this.warning_threshold_triggered = true;
+        } else if (this.value > this.warning_threshold && this.warning_threshold_triggered) {
+          this.warning_threshold_triggered = false;
+        }
       }
     })
   }
