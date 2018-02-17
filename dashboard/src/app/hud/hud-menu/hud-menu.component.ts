@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HudDataService } from '../hud-data.service';
+import {SpeechService} from '../speech.service';
 import { HudSensor } from '../model/hud-sensor';
 import { HUD_SENSORS_DETAIL_NAME } from '../model/hud-sensors-detail-enum';
 import { Observable } from 'rxjs/Observable';
@@ -38,8 +39,12 @@ export class HudMenuComponent implements OnInit {
 
   private isOpen: boolean = false;
   private sensorsUpdater: Subscription;
+  showSearchButton: boolean;
+  speechData: string;
 
-  constructor(private dataService: HudDataService) { }
+  constructor(private dataService: HudDataService, private speechService:SpeechService) {
+    
+   }
 
   onMenuOpened(): void {
     let timer = TimerObservable.create(0, 1000);
@@ -73,7 +78,39 @@ export class HudMenuComponent implements OnInit {
     }
   }
 
+  activateSpeechSearchMovie(): void {
+    this.showSearchButton = false;
+
+    this.speechService.record()
+        .subscribe(
+        //listener
+        (value) => {
+            this.speechData = value;
+            console.log(value);
+        },
+        //errror
+        (err) => {
+            console.log(err);
+            if (err.error == "no-speech") {
+                console.log("--restatring service--");
+                this.activateSpeechSearchMovie();
+            }
+        },
+        //completion
+        () => {
+            this.showSearchButton = true;
+            console.log("--complete--");
+            this.activateSpeechSearchMovie();
+        });
+}
+
   ngOnInit() {
+
+  }
+
+  ngOnDestroy()
+  {
+    this.speechService.DestroySpeechObject();
   }
 
 }

@@ -27,6 +27,7 @@ import { HudDataService } from './hud-data.service';
 import { HudAccelerometerComponent } from './sensors/hud-accelerometer/hud-accelerometer.component';
 import { HudMenuComponent } from './hud-menu/hud-menu.component';
 import { HudDialogComponent } from './hud-dialog/hud-dialog.component';
+import {SpeechService} from './speech.service'
 
 export function socketProvider() {
   return new SockJS('http://piagatech.ddns.net:8090/greetings');
@@ -85,7 +86,7 @@ const stompConfig: StompConfig = {
     {
       provide: StompConfig,
       useValue: stompConfig
-    }, HudDataService],
+    }, HudDataService,SpeechService],
   entryComponents: [
     HudDialogComponent
   ]
