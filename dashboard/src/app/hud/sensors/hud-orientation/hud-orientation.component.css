@@ -25,6 +25,7 @@ div#Center
 {
     align-self: center;
     position:relative;
+    margin: 0 10% 0 10%;
     
 }
 
@@ -107,7 +108,7 @@ app-hud-accelerometer
         {
             position:absolute;
             top:0px;
-
+            width:50%;
         }
         #orientationRollCanvas
         {
@@ -125,7 +126,7 @@ app-hud-accelerometer
 
         #rollAndAcc
         {
-            margin: 0 10% 0 10%;
+            
             display: flex;
             justify-content: center;
             flex-flow: column;

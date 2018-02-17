@@ -1,5 +1,6 @@
 <ng-container *ngIf="value">
-  <mat-icon *ngIf="value > 80" fontSet="mdi-set" fontIcon="mdi-battery" class="mdi-100px"></mat-icon>
-  <mat-icon *ngIf="value > 30 && value <= 80" fontSet="mdi-set" fontIcon="mdi-battery-50" class="mdi-100px"></mat-icon>
-  <mat-icon *ngIf="value < 30" fontSet="mdi-set" fontIcon="mdi-battery-30" class="mdi-100px" color="warn"></mat-icon>
+  <mat-icon *ngIf="loading" fontSet="mdi-set" fontIcon="mdi-battery-charging"  class="mdi-100px"></mat-icon>
+  <mat-icon *ngIf="!loading && value > 80" fontSet="mdi-set" fontIcon="mdi-battery" class="mdi-100px"></mat-icon>
+  <mat-icon *ngIf="!loading && value > 30 && value <= 80" fontSet="mdi-set" fontIcon="mdi-battery-50" class="mdi-100px"></mat-icon>
+  <mat-icon *ngIf="!loading && value < 30" fontSet="mdi-set" fontIcon="mdi-battery-30" class="mdi-100px" color="warn"></mat-icon>
 </ng-container>

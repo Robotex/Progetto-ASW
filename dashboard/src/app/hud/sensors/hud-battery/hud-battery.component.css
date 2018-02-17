@@ -1,4 +1,51 @@
-mat-icon {
-    width: 100px;
-    height: 100px;
+@media only screen
+{
+    @media (orientation:landscape)
+    {
+        mat-icon {
+    
+            height: 100%;
+            color:rgba(0,255,0,1);;
+        }
+        
+        .mdi-100px.mdi-set, .mdi-100px.mdi:before {
+            font-size: 15vmin;
+            color:rgba(0, 255, 0, 1);
+            width:15vmin;
+        }
+    }
+    @media (orientation:portrait)
+    {
+        mat-icon {
+    
+            height: 100%;
+            color:rgba(0,255,0,1);;
+        }
+        
+        .mdi-100px.mdi-set, .mdi-100px.mdi:before {
+            font-size: 100% !important;
+            color:rgba(0, 255, 0, 1);
+        }
+    }
+}
+
+@keyframes blink
+{
+    from {color:rgba(0,255,0,1);}
+    to {display:rgba(0,255,0,0);}
+}
+
+@keyframes blinkOff
+{
+    from {display:block;}
+    to {display:none;}
+}
+
+mat-icon.mat-warn
+{
+    
+    animation-name: blink;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
