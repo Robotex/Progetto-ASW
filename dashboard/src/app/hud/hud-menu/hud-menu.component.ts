@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HudDataService } from '../hud-data.service';
 import {SpeechService} from '../speech.service';
 import { HudSensor } from '../model/hud-sensor';
@@ -19,8 +19,9 @@ class HudMenuSensor {
   templateUrl: './hud-menu.component.html',
   styleUrls: ['./hud-menu.component.css']
 })
-export class HudMenuComponent implements OnInit {
+export class HudMenuComponent implements OnInit, AfterViewInit  {
 
+  
   public sensors: HudMenuSensor[] = [];
   icons: {
     [sensor: string]: string
@@ -105,7 +106,11 @@ export class HudMenuComponent implements OnInit {
 }
 
   ngOnInit() {
+    
+  }
 
+  ngAfterViewInit(): void {
+    this.activateSpeechSearchMovie();
   }
 
   ngOnDestroy()
