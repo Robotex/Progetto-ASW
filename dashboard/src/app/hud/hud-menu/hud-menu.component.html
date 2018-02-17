@@ -8,7 +8,11 @@
     <button *ngIf="dataService.isConnected()" mat-menu-item (click)="dataService.disconnect()">Disconnect</button>
     <button *ngFor="let s of sensors" mat-menu-item>
       <mat-icon *ngIf="s.icon" [svgIcon]="s.icon"></mat-icon>
-      {{s.name}}:{{s.status}}({{s.delay}}ms)
+      {{s.name}}:
+      <mat-icon *ngIf="s.status=='DAMAGED'" svgIcon='heart-broken'></mat-icon>
+      <mat-icon *ngIf="s.status!='DAMAGED' && s.delay<=20" svgIcon='heart' class="green-heart"></mat-icon>
+      <mat-icon *ngIf="s.status!='DAMAGED' && s.delay>20 && s.delay<=100" svgIcon='heart' class="orange-heart"></mat-icon>
+      <mat-icon *ngIf="s.status!='DAMAGED' && s.delay>100" svgIcon='heart' class="red-heart"></mat-icon>
     </button>
     <!--mat-grid-list cols="2" rowHeight="2:1">
       <mat-grid-tile *ngFor="let s of sensors">

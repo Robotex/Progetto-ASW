@@ -59,12 +59,17 @@ export class HudMenuComponent implements OnInit {
     for (let s of rawSensors) {
       if (s.data === undefined)
         continue;
-      this.sensors.push({
+      let sensor=
+      {
         name: s.details.sensor,
         icon: this.icons[s.details.sensor],
         status: (s.status === undefined ? "?" : s.status.value),
-        delay: s.lastUpdate - s.data.timestamp //- s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]
-      });
+        delay: (s.data.timestamp -s.lastUpdate) - s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]
+                //(new Date()).getTime() - s.lastUpdate //- s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]
+      };
+      this.sensors.push(sensor);
+      if (s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]!=undefined)
+        console.log(s.details.sensor+": PROPRETY DETAIL DELAY:"+s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]+ "REAL DELAY: "+sensor.delay);
     }
   }
 

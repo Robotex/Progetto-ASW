@@ -13,3 +13,18 @@ mat-grid-tile {
     text-align: center;
 }
 */
+
+.green-heart
+{
+    color: rgb(0,200,0) !important;
+}
+
+.orange-heart
+{
+    color:rgb(250,150,0) !important;
+}
+
+.red-heart
+{
+    color:rgb(255,0,0) !important;
+}
