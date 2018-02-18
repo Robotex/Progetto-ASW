@@ -6,6 +6,8 @@
   <mat-menu #appMenu="matMenu">
     <button *ngIf="!dataService.isConnected()" mat-menu-item (click)="dataService.connect()">Connect</button>
     <button *ngIf="dataService.isConnected()" mat-menu-item (click)="dataService.disconnect()">Disconnect</button>
+    <button *ngIf="!this.voiceStarted" mat-menu-item (click)="voiceStart()">Start VOCE</button>
+    <button *ngIf="this.voiceStarted" mat-menu-item (click)="voiceStop()">Stop VOCE</button>
     <button *ngFor="let s of sensors" mat-menu-item>
       <mat-icon *ngIf="s.icon" [svgIcon]="s.icon"></mat-icon>
       {{s.name}}:
@@ -22,6 +24,3 @@
       </mat-grid-tile>   
     </mat-grid-list-->
   </mat-menu>
-
-  <button *ngIf="!this.voiceStarted" (click)="voiceStart()">VOCE</button>
-  <button *ngIf="this.voiceStarted" (click)="voiceStop()">VOCE</button>
