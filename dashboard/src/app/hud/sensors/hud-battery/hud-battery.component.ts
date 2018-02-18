@@ -8,7 +8,7 @@ import { HudDataService } from '../../hud-data.service';
 })
 export class HudBatteryComponent implements OnInit {
 
-  private value: number;
+  value: number;
   private loading: boolean;
   private sensor_type="BATTERY";
   private sensorProperties:{[key:string]:any};

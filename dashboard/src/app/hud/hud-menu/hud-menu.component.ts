@@ -44,7 +44,7 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
   speechData: string;
   voiceStarted=false;
 
-  constructor(private dataService: HudDataService, private speechService:SpeechService) {
+  constructor(public dataService: HudDataService, private speechService:SpeechService) {
     
    }
 
