@@ -101,9 +101,9 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
     let tollerance=10;
     if (this.isNearAt(this.yaw,0,tollerance) || this.isNearAt(this.yaw,360,tollerance))
     {
-      if (this.headingString!= "NORD")
-        this.speechService.speakMessage("Direzione "+"NORD",VOICE_TONE_PITCH.INFO);
-      this.headingString="NORD";
+      if (this.headingString!= "SUD")
+        this.speechService.speakMessage("Direzione "+"SUD",VOICE_TONE_PITCH.INFO);
+      this.headingString="SUD";
     }
     else if (this.isNearAt(this.yaw,90,tollerance))
     {
@@ -113,9 +113,9 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
     }
     else if (this.isNearAt(this.yaw,180,tollerance))
     {
-      if (this.headingString!="SUD")
-        this.speechService.speakMessage("Direzione "+"SUD",VOICE_TONE_PITCH.INFO);
-      this.headingString="SUD";
+      if (this.headingString!="NORD")
+        this.speechService.speakMessage("Direzione "+"NORD",VOICE_TONE_PITCH.INFO);
+      this.headingString="NORD";
     }
     else
     {

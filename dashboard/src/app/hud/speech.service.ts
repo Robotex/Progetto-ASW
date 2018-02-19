@@ -64,8 +64,8 @@ export class SpeechService {
         if (!speechSynthesis.speaking && this.messagesToSay.length>0)
         {
             let message:VoiceMessage=this.messagesToSay.pop();
-            console.log(message);
-            console.log(this.messagesToSay);
+            
+            
             var msg=new SpeechSynthesisUtterance(message.message);
             msg.volume=1;
             msg.rate=message.type;
@@ -77,10 +77,10 @@ export class SpeechService {
 
     speakMessage(msg:string,speechTone:VOICE_TONE_PITCH)
     {
-        console.log("New Message: "+ msg);
+        
         if (this.messagesToSay.length==0 || this.messagesToSay.filter(f=>f.message==msg).length==0)
         {
-            console.log("Adding message to queue");
+            console.log("new message in queue: "+msg);
             let message:VoiceMessage={message:msg,type:speechTone};
             this.messagesToSay.push(message);
             this.messagesToSay=this.messagesToSay.sort((a,b)=>{ return a.type<b.type?-1:1});

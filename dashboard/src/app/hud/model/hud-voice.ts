@@ -35,8 +35,8 @@ export enum DEFAULT_WARNING_VOICE_MESSAGE
     SENSOR_OVERHEATING="Attenzione, surriscaldamento!",
     SENSOR_LOW_BATTERY="Attenzione, batteria quasi scarica!",
     SENSOR_ACCELERATION_SHAKED="Attenzione, accelerazione instabile!",
-    SENSOR_PITCH_ORIENTATION_HEADUP_WARNING="Attenzione, testa eccessivamente alzata! Ti senti bene?",
-    SENSOR_PITCH_ORIENTATION_HEADDOWN_WARNING="Attenzione, testa abbassata per troppo tempo! Ti senti bene?",
+    SENSOR_PITCH_ORIENTATION_HEADUP_WARNING="Tutto bene?",
+    SENSOR_PITCH_ORIENTATION_HEADDOWN_WARNING="Tutto bene?",
     SENSOR_ROLL_ORIENTATION_HEADUP_WARNING="Attenzione, inclinazione testa inusuale! Ti senti bene?",
     SENSOR_LATENCY_HIGH="Attenzione, componente lento!",
     SENSOR_BROKEN="Attenzione, un componente ha smesso di funzionare"
