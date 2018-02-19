@@ -14,6 +14,49 @@ mat-grid-tile {
 }
 */
 
+.mainRow
+{
+    background:transparent;
+}
+
+.mainButton mat-icon
+{
+    margin:0 auto;
+}
+
+.mainButton:hover
+{
+    background:rgba(0,0,0,.04);
+}
+
+.powerOn
+{
+    border-bottom:1px solid red;
+}
+
+.powerOff
+{
+    border-bottom:1px solid green;
+}
+
+#menuButton.mat-icon-button
+{
+    color: lightgreen;
+    background-color: rgb(0,80,0);
+    border: 1px solid lightgreen;
+    top: 2px;
+    left: 2px;
+    box-shadow:  0px 4px rgb(0,60,0);
+    border-radius: 25%;
+}
+
+#menuButton.mat-icon-button.cdk-focused
+{
+    
+    box-shadow:0 !important;
+    top: 4px;
+}
+
 .green-heart
 {
     color: rgb(0,200,0) !important;

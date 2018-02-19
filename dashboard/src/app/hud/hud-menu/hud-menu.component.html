@@ -1,14 +1,18 @@
 
 
-  <button mat-icon-button [matMenuTriggerFor]="appMenu" (menuOpened)="onMenuOpened()" (menuClosed)="onMenuClosed()" role="presentation">
+  <button id="menuButton" mat-icon-button [matMenuTriggerFor]="appMenu" (menuOpened)="onMenuOpened()" (menuClosed)="onMenuClosed()" role="presentation">
       <mat-icon svgIcon="menu"></mat-icon>
   </button>
   <mat-menu #appMenu="matMenu">
-    <button *ngIf="!dataService.isConnected()" mat-menu-item (click)="connect()">Connect</button>
-    <button *ngIf="dataService.isConnected()" mat-menu-item (click)="disconnect()">Disconnect</button>
-    <button *ngIf="!this.voiceStarted" mat-menu-item (click)="voiceStart()">Start voice recognition</button>
-    <button *ngIf="this.voiceStarted" mat-menu-item (click)="voiceStop()">Stop voice recognition</button>
-    <button mat-menu-item (click)="toggleVoiceSynthesis()">Voice synthesis: {{voiceSynthesis === true ? 'ATTIVO' : 'DISATTIVO'}}</button>
+    <div mat-menu-item class="mainRow">
+        <button class="mainButton powerOn" *ngIf="!dataService.isConnected()" mat-icon-button (click)="connect()"><mat-icon  svgIcon="power"></mat-icon></button>
+          <button class="mainButton powerOff" *ngIf="dataService.isConnected()" mat-icon-button (click)="disconnect()"><mat-icon svgIcon="power"></mat-icon></button>
+          <button class="mainButton" *ngIf="!this.voiceStarted" mat-icon-button (click)="voiceStart()"><mat-icon svgIcon="microphone-off"></mat-icon> </button>
+          <button class="mainButton" *ngIf="this.voiceStarted" mat-icon-button (click)="voiceStop()"><mat-icon svgIcon="microphone"></mat-icon></button>
+          <button class="mainButton" (click)="toggleVoiceSynthesis()" mat-icon-button ><mat-icon svgIcon="{{voiceSynthesis === true ? 'volume-high' : 'volume-mute'}}"></mat-icon></button>
+    </div>
+    
+    
     <button *ngFor="let s of sensors" mat-menu-item>
       <mat-icon *ngIf="s.icon" [svgIcon]="s.icon"></mat-icon>
       {{s.name}}:
