@@ -29,7 +29,7 @@ export class HudCameraComponent implements OnInit {
       .then(res => res.blob())
       .then(blob => this.src = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob)));
 
-      if (sensor.properties[HUD_SENSORS_DETAIL_NAME.RESOLUTION]!=undefined && this.image_width==0 && this.image_height==0)
+      if (sensor.properties!=undefined &&  sensor.properties[HUD_SENSORS_DETAIL_NAME.RESOLUTION]!=undefined && this.image_width==0 && this.image_height==0)
       {
         let resolution:string=sensor.properties[HUD_SENSORS_DETAIL_NAME.RESOLUTION];
         this.image_width=parseInt(resolution.substring(1,resolution.length-2).split('x')[0]);
