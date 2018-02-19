@@ -40,7 +40,7 @@ export class HudCameraComponent implements OnInit {
 
   ngOnInit() {
     this.getSensor();
-
+    this.src = this._sanitizer.bypassSecurityTrustResourceUrl("../../../assets/camera.jpeg");
   }
 
 }
