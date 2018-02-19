@@ -117,7 +117,7 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
         this.speechService.speakMessage("Direzione "+"NORD",VOICE_TONE_PITCH.INFO);
       this.headingString="NORD";
     }
-    else
+    else if (this.isNearAt(this.yaw,270,tollerance))
     {
       if (this.headingString!="OVEST")
         this.speechService.speakMessage("Direzione "+"OVEST",VOICE_TONE_PITCH.INFO);
