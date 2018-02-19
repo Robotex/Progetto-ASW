@@ -6,6 +6,9 @@ import { HUD_SENSORS_DETAIL_NAME } from '../model/hud-sensors-detail-enum';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { VOICE_TONE_PITCH, DEFAULT_WARNING_VOICE_MESSAGE, DEFAULT_DANGER_VOICE_MESSAGE } from '../model/hud-voice';
+import { HudSensorData } from '../model/hud-sensor-data';
+import { HudSensorStatus } from '../model/hud-sensor-status';
 
 class HudMenuSensor {
   icon: string;
@@ -22,6 +25,9 @@ class HudMenuSensor {
 export class HudMenuComponent implements OnInit, AfterViewInit  {
 
   
+  ngOnInit(): void {
+    this.speechService.init();
+  }
   public sensors: HudMenuSensor[] = [];
   icons: {
     [sensor: string]: string
@@ -87,9 +93,25 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
                 //(new Date()).getTime() - s.lastUpdate //- s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]
       };
       this.sensors.push(sensor);
-      if (s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]!=undefined)
-        console.log(s.details.sensor+": PROPRETY DETAIL DELAY:"+s.properties[HUD_SENSORS_DETAIL_NAME.DELAY]+ "REAL DELAY: "+sensor.delay);
+      this.saySensorStatus(sensor);
+      
     }
+  }
+
+  saySensorStatus(sensor:HudMenuSensor)
+  {
+      if (sensor.status=="DAMAGED")
+      {
+        if (sensor.name=="CAMERA")
+          this.speechService.speakDefaultDangerMessage(DEFAULT_DANGER_VOICE_MESSAGE.SENSOR_BROKEN);
+        else
+          this.speechService.speakDefaultWarningMessage(DEFAULT_WARNING_VOICE_MESSAGE.SENSOR_BROKEN);
+      }
+      else
+      {
+        if (sensor.delay>100)
+          this.speechService.speakDefaultWarningMessage(DEFAULT_WARNING_VOICE_MESSAGE.SENSOR_LATENCY_HIGH);
+      }
   }
 
   activateSpeechSearchMovie(): void {
@@ -100,13 +122,13 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
         //listener
         (value) => {
             this.speechData = value;
-            if (this.speechData=="connect")
+            if (this.speechData=="connetti" || this.speechData=="connettiti")
             {
-              this.dataService.connect();
+              this.connect();
             }
-            if (this.speechData =="disconnect")
+            if (this.speechData =="disconnetti" || this.speechData=="disconnettiti")
             {
-              this.dataService.disconnect();
+              this.disconnect();
             }
             console.log(value);
         },
@@ -126,14 +148,18 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
         });
 }
 
-  ngOnInit() {
-    
+  connect()
+  {
+    this.speechService.speakMessage("Mi sto connettendo",VOICE_TONE_PITCH.INFO);
+    this.dataService.connect();
+    if (this.dataService.isConnected()) this.speechService.speakMessage("Connesso",VOICE_TONE_PITCH.INFO);
   }
 
-  activateMic()
+  disconnect()
   {
     
-    
+    this.dataService.disconnect();
+    if (!this.dataService.isConnected()) this.speechService.speakMessage("Disconnesso",VOICE_TONE_PITCH.INFO);
   }
 
   ngAfterViewInit(): void {

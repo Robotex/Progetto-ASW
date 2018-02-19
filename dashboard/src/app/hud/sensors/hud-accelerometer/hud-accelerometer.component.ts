@@ -3,6 +3,8 @@ import { HudDataService } from '../../hud-data.service';
 import { Observable } from 'rxjs/Observable';
 import { HudSensor } from '../../model/hud-sensor';
 import { HUD_SENSORS_DETAIL_NAME } from '../../model/hud-sensors-detail-enum';
+import { SpeechService } from '../../speech.service';
+import { DEFAULT_WARNING_VOICE_MESSAGE } from '../../model/hud-voice';
 
 @Component({
   selector: 'app-hud-accelerometer',
@@ -29,7 +31,7 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
   private sensor_type="ACCELEROMETER";
   private cx: CanvasRenderingContext2D;
   private sensorProperties:{[key:string]:any};
-  constructor(private dataService: HudDataService) { }
+  constructor(private dataService: HudDataService,private speechService:SpeechService) { }
 
   getSensor(): void {
     
@@ -65,6 +67,11 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
 
     
 
+  }
+
+  voiceAlert()
+  {
+    this.speechService.speakDefaultWarningMessage(DEFAULT_WARNING_VOICE_MESSAGE.SENSOR_ACCELERATION_SHAKED);
   }
 
   changeStrokeColorOpacity(red:number,green:number,blue:number,opacity:number)
@@ -111,6 +118,7 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
       
       if (value==max)
       {
+        this.voiceAlert();
         this.changeStrokeColorOpacity(255,0,0,1);
       }
       else
@@ -157,6 +165,7 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
       opacity=(value-half)/(half);
       if (value==min)
       {
+        this.voiceAlert();
         this.changeStrokeColorOpacity(255,0,0,1);
       }
       else
@@ -246,6 +255,7 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
         
         if (value==max)
         {
+          this.voiceAlert();
           this.changeStrokeColorOpacity(255,0,0,1);
           this.drawBigArrowOutside(angle);
         }
@@ -274,6 +284,7 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
         
         if (value==min)
         {
+          this.voiceAlert();
           this.changeStrokeColorOpacity(255,0,0,1);
           this.drawBigArrowOutside(newAngle,);
         }
@@ -300,7 +311,7 @@ export class HudAccelerometerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    
+    this.speechService.init();
   }
 
   ngAfterViewInit(): void {

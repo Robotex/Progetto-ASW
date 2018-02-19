@@ -197,6 +197,7 @@ export class HudDataService implements OnDestroy {
       this.disconnect();
     });
     this._stompService.initAndConnect();
+    
   }
 
   public disconnect() {

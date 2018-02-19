@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { HudDataService } from '../../hud-data.service';
 import { HUD_SENSORS_DETAIL_NAME } from '../../model/hud-sensors-detail-enum';
 import { getOrCreateElementRef } from '@angular/core/src/render3/di';
+import { SpeechService } from '../../speech.service';
+import { VOICE_TONE_PITCH, DEFAULT_WARNING_VOICE_MESSAGE } from '../../model/hud-voice';
 
 @Component({
   selector: 'app-hud-orientation',
@@ -46,7 +48,11 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
   private sYawCx:CanvasRenderingContext2D;
   private sensorProperties:{[key:string]:any};
 
-  constructor(private dataService: HudDataService) { }
+  private headingString:string;
+  private pitchLevel:string;
+  private rowLevel:string;
+
+  constructor(private dataService: HudDataService, private speechService: SpeechService) { }
 
   getSensor(): void {
     this.dataService.getSensorObservable(this.sensor_type).subscribe(sensor=>{
@@ -72,12 +78,95 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
         this.updateRollCanvas();
         this.updatePitchCanvas();
         this.updateYawCanvas();
+        this.checkAlerts();
       }
       if (this.lightMax==0 && this.dataService.getSensorProperty("LIGHT",HUD_SENSORS_DETAIL_NAME.MAX_VALUE)!=undefined)
       {
          this.lightMax=this.dataService.getSensorProperty("LIGHT",HUD_SENSORS_DETAIL_NAME.MAX_VALUE);
       }
     })
+  }
+
+  isNearAt(value:number,target:number, tollerance:number):boolean
+  {
+    let difference=value-target;
+    if (Math.abs(difference)< tollerance)
+      return true;
+    
+    return false;
+  }
+
+  changeHeading()
+  {
+    let tollerance=10;
+    if (this.isNearAt(this.yaw,0,tollerance) || this.isNearAt(this.yaw,360,tollerance))
+    {
+      if (this.headingString!= "NORD")
+        this.speechService.speakMessage("Direzione "+"NORD",VOICE_TONE_PITCH.INFO);
+      this.headingString="NORD";
+    }
+    else if (this.isNearAt(this.yaw,90,tollerance))
+    {
+      if (this.headingString!="EST")
+        this.speechService.speakMessage("Direzione "+"EST",VOICE_TONE_PITCH.INFO);
+      this.headingString="EST";
+    }
+    else if (this.isNearAt(this.yaw,180,tollerance))
+    {
+      if (this.headingString!="SUD")
+        this.speechService.speakMessage("Direzione "+"SUD",VOICE_TONE_PITCH.INFO);
+      this.headingString="SUD";
+    }
+    else
+    {
+      if (this.headingString!="OVEST")
+        this.speechService.speakMessage("Direzione "+"OVEST",VOICE_TONE_PITCH.INFO);
+      this.headingString="OVEST";
+    }
+  }
+
+  checkPitch()
+  {
+    let pitch=this.pitch;
+    if (pitch>80)
+    {
+      if (this.pitchLevel!="HIGH")
+        this.speechService.speakDefaultWarningMessage(DEFAULT_WARNING_VOICE_MESSAGE.SENSOR_PITCH_ORIENTATION_HEADUP_WARNING);
+      this.pitchLevel="HIGH";
+    }
+    else if (Math.abs(pitch)<=80)
+    {
+      this.pitchLevel="NORMAL";
+    }
+    else
+    {
+      if (this.pitchLevel!="LOW")
+          this.speechService.speakDefaultWarningMessage(DEFAULT_WARNING_VOICE_MESSAGE.SENSOR_PITCH_ORIENTATION_HEADDOWN_WARNING);
+      this.pitchLevel="LOW";
+    }
+  }
+  checkRoll()
+  {
+    let roll=this.roll;
+    if (Math.abs(roll)>80)
+    {
+      if (this.rowLevel!="UPSIDEDOWN")
+      {
+        this.speechService.speakDefaultWarningMessage(DEFAULT_WARNING_VOICE_MESSAGE.SENSOR_ROLL_ORIENTATION_HEADUP_WARNING);
+
+      }
+      this.rowLevel="UPSIDEDOWN";
+    }
+    else this.rowLevel="NORMAL";
+
+  }
+
+  checkAlerts()
+  {
+    this.changeHeading();
+    this.checkPitch();
+
+    
   }
 
   rotateCanvas(canvas:CanvasRenderingContext2D, angle:number,canvasWidth:number,canvasHeight:number)
@@ -347,6 +436,7 @@ export class HudOrientationComponent implements OnInit, AfterViewInit {
     this.initPitchContext();
     this.initYawContext();
     this.getSensor();
+    this.speechService.init();
   }
 
 }

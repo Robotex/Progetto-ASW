@@ -3,6 +3,8 @@ import { HudDataService } from '../../hud-data.service';
 import { MatDialog } from '@angular/material';
 import { HudDialogComponent, HUD_DIALOG_TYPE } from '../../hud-dialog/hud-dialog.component';
 import { HUD_SENSORS_DETAIL_NAME } from '../../model/hud-sensors-detail-enum';
+import { SpeechService } from '../../speech.service';
+import { DEFAULT_DANGER_VOICE_MESSAGE } from '../../model/hud-voice';
 
 @Component({
   selector: 'app-hud-proximity',
@@ -17,7 +19,7 @@ export class HudProximityComponent implements OnInit {
   private sensor_type="PROXIMITY";
   private sensorProperties:{[key:string]:any};
 
-  constructor(private dataService: HudDataService, public dialog: MatDialog) { }
+  constructor(private dataService: HudDataService,private speechService:SpeechService ,public dialog: MatDialog) { }
 
   getSensor(): void {
     this.dataService.getSensorObservable(this.sensor_type).subscribe(sensor=>{
@@ -34,6 +36,7 @@ export class HudProximityComponent implements OnInit {
         this.warning_threshold = this.sensorProperties[HUD_SENSORS_DETAIL_NAME.MAX_VALUE] * 0.10;
 
         if (this.value <= this.warning_threshold && !this.warning_threshold_triggered) {
+          this.speechService.speakDefaultDangerMessage(DEFAULT_DANGER_VOICE_MESSAGE.SENSOR_PROXIMITY);
           this.dialog.open(HudDialogComponent, {
             data: {
               timeout: 2000,
@@ -51,6 +54,7 @@ export class HudProximityComponent implements OnInit {
 
   ngOnInit() {
     this.getSensor();
+    this.speechService.init();
   }
 
 }

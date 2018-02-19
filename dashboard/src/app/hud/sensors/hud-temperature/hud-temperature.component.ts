@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HudDataService } from '../../hud-data.service';
 import { HUD_SENSORS_DETAIL_NAME } from '../../model/hud-sensors-detail-enum';
+import { SpeechService } from '../../speech.service';
+import { DEFAULT_WARNING_VOICE_MESSAGE } from '../../model/hud-voice';
 
 @Component({
   selector: 'app-hud-temperature',
@@ -13,8 +15,9 @@ export class HudTemperatureComponent implements OnInit {
   warning_threshold: number;
   private sensor_type="TEMPERATURE";
   private sensorProperties:{[key:string]:any};
+  private status:string;
 
-  constructor(private dataService: HudDataService) { }
+  constructor(private dataService: HudDataService,private speechService:SpeechService) { }
 
   getSensor(): void {
     this.dataService.getSensorObservable(this.sensor_type).subscribe(sensor=>{
@@ -33,8 +36,20 @@ export class HudTemperatureComponent implements OnInit {
     })
   }
 
+  check()
+  {
+    if (this.value>this.warning_threshold)
+    {
+      if (this.status!="OVERHEATING")
+        this.speechService.speakDefaultWarningMessage(DEFAULT_WARNING_VOICE_MESSAGE.SENSOR_OVERHEATING);
+      this.status="OVERHEATING";
+    }
+    else this.status="NORMAL";
+  }
+
   ngOnInit() {
     this.getSensor();
+    this.speechService.init();
   }
 
 }
