@@ -16,7 +16,7 @@ interface IWindow extends Window{
 @Injectable()
 export class SpeechService {
     speakerObs:Observable<number>;
-    audioSwitch:boolean;
+    audioSwitch:boolean = true;
     speechRecognition: any;
     speechSynthesis:any;
     voice:any;
@@ -65,6 +65,8 @@ export class SpeechService {
         {
             let message:VoiceMessage=this.messagesToSay.pop();
             
+            if (!this.audioSwitch)
+                return;
             
             var msg=new SpeechSynthesisUtterance(message.message);
             msg.volume=1;
@@ -77,7 +79,6 @@ export class SpeechService {
 
     speakMessage(msg:string,speechTone:VOICE_TONE_PITCH)
     {
-        
         if (this.messagesToSay.length==0 || this.messagesToSay.filter(f=>f.message==msg).length==0)
         {
             console.log("new message in queue: "+msg);
@@ -101,6 +102,15 @@ export class SpeechService {
     speakDefaultDangerMessage(message:DEFAULT_DANGER_VOICE_MESSAGE)
     {
         this.speakMessage(message,VOICE_TONE_PITCH.DANGER);
+    }
+
+    toggleSpeak() {
+        this.audioSwitch = !this.audioSwitch;
+        return this.audioSwitch;
+    }
+
+    getVoiceSynthesisEnabled() {
+        return this.audioSwitch;
     }
 
     

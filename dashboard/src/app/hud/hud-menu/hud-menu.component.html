@@ -6,8 +6,9 @@
   <mat-menu #appMenu="matMenu">
     <button *ngIf="!dataService.isConnected()" mat-menu-item (click)="connect()">Connect</button>
     <button *ngIf="dataService.isConnected()" mat-menu-item (click)="disconnect()">Disconnect</button>
-    <button *ngIf="!this.voiceStarted" mat-menu-item (click)="voiceStart()">Start VOCE</button>
-    <button *ngIf="this.voiceStarted" mat-menu-item (click)="voiceStop()">Stop VOCE</button>
+    <button *ngIf="!this.voiceStarted" mat-menu-item (click)="voiceStart()">Start voice recognition</button>
+    <button *ngIf="this.voiceStarted" mat-menu-item (click)="voiceStop()">Stop voice recognition</button>
+    <button mat-menu-item (click)="toggleVoiceSynthesis()">Voice synthesis: {{voiceSynthesis === true ? 'ATTIVO' : 'DISATTIVO'}}</button>
     <button *ngFor="let s of sensors" mat-menu-item>
       <mat-icon *ngIf="s.icon" [svgIcon]="s.icon"></mat-icon>
       {{s.name}}:

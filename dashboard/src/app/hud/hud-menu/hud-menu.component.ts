@@ -27,6 +27,7 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
   
   ngOnInit(): void {
     this.speechService.init();
+    this.voiceSynthesis = this.speechService.getVoiceSynthesisEnabled();
   }
   public sensors: HudMenuSensor[] = [];
   icons: {
@@ -48,11 +49,14 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
   private sensorsUpdater: Subscription;
   showSearchButton: boolean;
   speechData: string;
-  voiceStarted=false;
+  voiceStarted: boolean =false;
+  voiceSynthesis: boolean;
 
-  constructor(public dataService: HudDataService, private speechService:SpeechService) {
-    
-   }
+  constructor(public dataService: HudDataService, private speechService:SpeechService) { }
+
+  toggleVoiceSynthesis() {
+    this.voiceSynthesis = this.speechService.toggleSpeak();
+  }
 
   onMenuOpened(): void {
     let timer = TimerObservable.create(0, 1000);
