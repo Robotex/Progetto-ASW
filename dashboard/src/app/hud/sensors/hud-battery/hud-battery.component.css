@@ -29,23 +29,19 @@
     }
 }
 
-@keyframes blink
+@keyframes blinkMe
 {
-    from {color:rgba(0,255,0,1);}
-    to {display:rgba(0,255,0,0);}
+    0% {color:rgba(255,0,0,1);}
+    50% {color:rgba(255,0,0,0);}
 }
 
-@keyframes blinkOff
-{
-    from {display:block;}
-    to {display:none;}
-}
 
-mat-icon.mat-warn
+
+#batteryLow
 {
-    
-    animation-name: blink;
-    animation-duration: 1s;
+    color:red;
+    animation-name: blinkMe;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
