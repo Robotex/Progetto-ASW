@@ -94,7 +94,7 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
 
   activateSpeechSearchMovie(): void {
     this.showSearchButton = false;
-
+    
     this.speechService.record()
         .subscribe(
         //listener
@@ -122,7 +122,7 @@ export class HudMenuComponent implements OnInit, AfterViewInit  {
         () => {
             this.showSearchButton = true;
             console.log("--complete--");
-            this.activateSpeechSearchMovie();
+            //this.activateSpeechSearchMovie();
         });
 }
 
