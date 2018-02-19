@@ -9,7 +9,7 @@ import { TimerObservable } from 'rxjs/observable/TimerObservable';
 })
 export class HudDialogComponent implements OnInit {
 
-  private HUD_DIALOG_TYPE : any = HUD_DIALOG_TYPE;
+  public HUD_DIALOG_TYPE : any = HUD_DIALOG_TYPE;
 
   constructor(public dialogRef: MatDialogRef<HudDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
