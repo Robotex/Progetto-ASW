@@ -48,7 +48,7 @@ export class HudTemperatureComponent implements OnInit {
       else
       {
         let proportion=this.value/max;
-        console.log(proportion);
+        
         this.tempColor={"color":"rgba("+proportion*255+","+(1-proportion)*255+",0,1)"};
       }
       
